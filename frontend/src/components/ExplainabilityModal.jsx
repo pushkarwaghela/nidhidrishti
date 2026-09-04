@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { X, ShieldAlert, AlertTriangle, CheckCircle2, IndianRupee, Layers, MapPin, Building2, ExternalLink } from 'lucide-react';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
 export default function ExplainabilityModal({ workId, onClose }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -8,7 +10,7 @@ export default function ExplainabilityModal({ workId, onClose }) {
   useEffect(() => {
     if (!workId) return;
     setLoading(true);
-    fetch(`/api/anomalies/${workId}/explain`)
+    fetch(`${API_BASE}/api/anomalies/${workId}/explain`)
       .then(res => res.json())
       .then(result => {
         setData(result);
@@ -31,10 +33,9 @@ export default function ExplainabilityModal({ workId, onClose }) {
             <div className="flex items-center gap-2">
               <span className="text-xs font-mono text-cyan-400 font-bold">{data?.work_id || workId}</span>
               {data && (
-                <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full text-white ${
-                  data.severity === 'Critical' ? 'bg-rose-600' :
-                  data.severity === 'Warning' ? 'bg-amber-600' : 'bg-emerald-600'
-                }`}>
+                <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full text-white ${data.severity === 'Critical' ? 'bg-rose-600' :
+                    data.severity === 'Warning' ? 'bg-amber-600' : 'bg-emerald-600'
+                  }`}>
                   {data.severity} Risk ({Math.round(data.risk_score)}/100)
                 </span>
               )}
@@ -90,19 +91,17 @@ export default function ExplainabilityModal({ workId, onClose }) {
                     <div key={idx} className="p-3 rounded-lg bg-slate-950/60 border border-slate-800 space-y-1.5">
                       <div className="flex justify-between items-center text-xs">
                         <span className="font-semibold text-slate-200">{sig.factor}</span>
-                        <span className={`font-bold ${
-                          sig.status.includes('Critical') ? 'text-rose-400' :
-                          sig.status.includes('High') || sig.status.includes('Warning') ? 'text-amber-400' : 'text-emerald-400'
-                        }`}>
+                        <span className={`font-bold ${sig.status.includes('Critical') ? 'text-rose-400' :
+                            sig.status.includes('High') || sig.status.includes('Warning') ? 'text-amber-400' : 'text-emerald-400'
+                          }`}>
                           +{sig.contribution_pct?.toFixed(1)} pts ({sig.status})
                         </span>
                       </div>
                       <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full ${
-                            sig.status.includes('Critical') ? 'bg-rose-500' :
-                            sig.status.includes('High') || sig.status.includes('Warning') ? 'bg-amber-500' : 'bg-emerald-500'
-                          }`}
+                          className={`h-full rounded-full ${sig.status.includes('Critical') ? 'bg-rose-500' :
+                              sig.status.includes('High') || sig.status.includes('Warning') ? 'bg-amber-500' : 'bg-emerald-500'
+                            }`}
                           style={{ width: `${Math.min(100, (sig.contribution_pct / 40) * 100)}%` }}
                         ></div>
                       </div>

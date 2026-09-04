@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Network, AlertTriangle, Building2, ShieldAlert, IndianRupee } from 'lucide-react';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
 export default function ContractorGraph() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/contractors/graph')
+    fetch(`${API_BASE}/api/contractors/graph`)
       .then(res => res.json())
       .then(resData => {
         setData(resData);

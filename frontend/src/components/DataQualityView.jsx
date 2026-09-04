@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { FileText, CheckCircle2, ShieldCheck, Database, Filter } from 'lucide-react';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
 export default function DataQualityView() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/data-quality')
+    fetch(`${API_BASE}/api/data-quality`)
       .then(res => res.json())
       .then(resData => {
         setData(resData);

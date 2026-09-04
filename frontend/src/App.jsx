@@ -8,6 +8,8 @@ import DataQualityView from './components/DataQualityView';
 import ExplainabilityModal from './components/ExplainabilityModal';
 import { LayoutDashboard, MapPin, ShieldAlert, Network, FileCheck, RefreshCw } from 'lucide-react';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
 export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
   const [overviewData, setOverviewData] = useState(null);
@@ -20,8 +22,8 @@ export default function App() {
   const fetchDashboardData = () => {
     setLoading(true);
     Promise.all([
-      fetch('/api/overview').then(res => res.json()),
-      fetch('/api/works?limit=250').then(res => res.json())
+      fetch(`${API_BASE}/api/overview`).then(res => res.json()),
+      fetch(`${API_BASE}/api/works?limit=250`).then(res => res.json())
     ])
       .then(([overviewRes, worksRes]) => {
         setOverviewData(overviewRes);
@@ -57,7 +59,7 @@ export default function App() {
 
   const handleRunPipeline = () => {
     setIsPipelineRunning(true);
-    fetch('/api/pipeline/run', { method: 'POST' })
+    fetch(`${API_BASE}/api/pipeline/run`, { method: 'POST' })
       .then(res => res.json())
       .then(data => {
         setIsPipelineRunning(false);
@@ -84,11 +86,10 @@ export default function App() {
         <div className="flex flex-wrap items-center gap-2 border-b border-slate-800 pb-3">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-              activeTab === 'overview'
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${activeTab === 'overview'
                 ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-900/40 border border-cyan-500/50'
                 : 'text-slate-400 hover:text-white hover:bg-slate-900/60'
-            }`}
+              }`}
           >
             <LayoutDashboard className="w-4 h-4" />
             Risk Overview Dashboard
@@ -96,11 +97,10 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab('map')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-              activeTab === 'map'
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${activeTab === 'map'
                 ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-900/40 border border-cyan-500/50'
                 : 'text-slate-400 hover:text-white hover:bg-slate-900/60'
-            }`}
+              }`}
           >
             <MapPin className="w-4 h-4" />
             Geospatial Heatmap ({works.filter(w => w.latitude).length})
@@ -108,11 +108,10 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab('alerts')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-              activeTab === 'alerts'
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${activeTab === 'alerts'
                 ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-900/40 border border-cyan-500/50'
                 : 'text-slate-400 hover:text-white hover:bg-slate-900/60'
-            }`}
+              }`}
           >
             <ShieldAlert className="w-4 h-4" />
             Alert Queue & Audit ({works.filter(w => w.severity === 'Critical' || w.severity === 'Warning').length})
@@ -120,11 +119,10 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab('network')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-              activeTab === 'network'
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${activeTab === 'network'
                 ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-900/40 border border-cyan-500/50'
                 : 'text-slate-400 hover:text-white hover:bg-slate-900/60'
-            }`}
+              }`}
           >
             <Network className="w-4 h-4" />
             Contractor Concentration Graph
@@ -132,11 +130,10 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab('quality')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-              activeTab === 'quality'
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${activeTab === 'quality'
                 ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-900/40 border border-cyan-500/50'
                 : 'text-slate-400 hover:text-white hover:bg-slate-900/60'
-            }`}
+              }`}
           >
             <FileCheck className="w-4 h-4" />
             Data Quality Audit Trail
