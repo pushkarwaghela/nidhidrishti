@@ -1,0 +1,62 @@
+# Backend Python Specific
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Models
+ml/models/*.pkl
+ml/models/*.joblib
+ml/models/*.h5
+!ml/models/.gitkeep
+
+# Data files
+data/raw/
+data/processed/
+!data/sample/
+*.csv
+*.xlsx
+*.json
+
+# Logs
+logs/
+*.log
+
+# Environment
+.env
+config.py
+secrets.py
+credentials.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Docker
+*.pid
+
+# Exports
+exports/
+reports/

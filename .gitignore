@@ -1,0 +1,279 @@
+# ============================================
+# NidhiDrishti - Root .gitignore
+# Smart India Hackathon 2026 Project
+# ============================================
+
+# ----------------------------
+# Python - Backend
+# ----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+pythonenv*
+
+# Distribution / Packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+test-reports/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# ML Model Files
+*.pkl
+*.joblib
+*.h5
+*.pb
+*.onnx
+*.pt
+*.pth
+model_cache/
+ml/models/*.pkl
+ml/models/*.joblib
+
+# Data Files (IMPORTANT!)
+# Keep small sample data, ignore large datasets
+*.csv
+*.xlsx
+*.xls
+*.json
+*.db
+*.sqlite
+*.sqlite3
+data/raw/
+data/processed/
+data/external/
+!data/sample/
+!data/SOURCES.md
+
+# Logs
+logs/
+*.log
+*.out
+
+# ----------------------------
+# Node.js / React - Frontend
+# ----------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+
+# Frontend build outputs
+dist/
+dist-ssr/
+*.local
+*.min.js
+*.min.css
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vite specific
+.vite/
+vite.config.js.timestamp-*
+
+# ----------------------------
+# IDEs & Editors
+# ----------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+desktop.ini
+Thumbs.db
+*.bak
+*.tmp
+
+# ----------------------------
+# OS Generated
+# ----------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ----------------------------
+# Project Specific
+# ----------------------------
+# Database credentials/config
+config.py
+secrets.py
+credentials.json
+service-account.json
+*.key
+*.pem
+
+# Backup files
+*.backup
+*.old
+*.orig
+
+# Archive files
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Reports & Exports (optional)
+exports/
+reports/
+*.pdf
+*.docx
+
+# Docker (if using)
+.dockerignore
+*.pid
+docker-compose.override.yml
+
+# ----------------------------
+# Environment & Secrets
+# ----------------------------
+.env*
+!.env.example
+*.p12
+*.pkcs12
+*.pfx
+*.jks
+
+# ----------------------------
+# CI/CD
+# ----------------------------
+.github/
+.gitlab/
+.azure/
+.jenkins/
+.travis.yml
+.gitlab-ci.yml
+circle.yml
+
+# ----------------------------
+# Documentation builds
+# ----------------------------
+docs/_build/
+site/
+
+# ----------------------------
+# Terraform / Infrastructure
+# ----------------------------
+*.tfstate
+*.tfstate.*
+.terraform/
+terraform.tfvars
+
+# ----------------------------
+# Database migration files
+# ----------------------------
+alembic_version
+migrations/versions/*.py
+!migrations/versions/__init__.py
+
+# ----------------------------
+# Large Media Files
+# ----------------------------
+*.mp4
+*.mp3
+*.wav
+*.avi
+*.mov
+*.flv
+*.mkv
+*.gif
+*.jpg
+*.jpeg
+*.png
+*.svg
+*.ico
+*.psd
+
+# ----------------------------
+# Keep Example Files
+# ----------------------------
+!.env.example
+!data/sample/*.csv
+!data/sample/*.json
+!ml/models/example_model.pkl
+!backend/config.example.py
+
+# ----------------------------
+# Lock Files (choose one)
+# ----------------------------
+# Keep package-lock.json for frontend
+!frontend/package-lock.json
+# Keep poetry.lock if using poetry
+!poetry.lock
+# Uncomment if you want to ignore pipenv
+# Pipfile.lock
