@@ -1,0 +1,586 @@
+// ==========================================================================
+// NidhiDrishti (निधिदृष्टि) - Realistic Indian MPLADS Surveillance Dataset
+// Scheme: Members of Parliament Local Area Development Scheme (MPLADS)
+// Ministry of Statistics and Programme Implementation (MoSPI), Govt of India
+// ==========================================================================
+
+export const ROLES = [
+  {
+    id: 'ministry',
+    title: 'Ministry (MoSPI Central Vigilance)',
+    scope: 'National Aggregate Overview',
+    officer: 'Dr. Rajiv Kumar Sharma, IAS',
+    designation: 'Additional Secretary & CVO, MoSPI',
+    badge: 'National Vigilance Admin',
+    welcomeMessage: 'Welcome to Central Vigilance Directorate — Monitoring 543 Lok Sabha & 245 Rajya Sabha Outlays'
+  },
+  {
+    id: 'sna',
+    title: 'State Nodal Authority (SNA - Uttar Pradesh)',
+    scope: 'State Planning & Inter-District Audit',
+    officer: 'Smt. Ananya Srivastava, IAS',
+    designation: 'Principal Secretary (Planning), Govt of UP',
+    badge: 'State Nodal Officer',
+    welcomeMessage: 'State Surveillance Console — 80 Parliamentary Constituencies (UP Chapter)'
+  },
+  {
+    id: 'district',
+    title: 'District Authority (DM / Collector - Varanasi)',
+    scope: 'District Execution & Site Inspections',
+    officer: 'Shri S. Rajalingam, IAS',
+    designation: 'District Magistrate & District Authority, Varanasi',
+    badge: 'District Magistrate Office',
+    welcomeMessage: 'Varanasi District Monitoring Console — 14 Blocks & 1,280 Panchayat Wards'
+  },
+  {
+    id: 'mp',
+    title: 'Member of Parliament (MP - Varanasi Constituency)',
+    scope: 'Constituency Development & Sanction Pipeline',
+    officer: 'Shri Narendra Modi',
+    designation: 'Member of Parliament, Lok Sabha (Varanasi, UP)',
+    badge: 'Hon’ble MP Dashboard',
+    welcomeMessage: 'Constituency Progress Portal — Track Sanctions, Citizen Feedback & Asset Handover'
+  }
+];
+
+export const SUMMARY_METRICS = {
+  totalSanctionedOutlay: {
+    value: '₹4,850.00 Cr',
+    rawCrores: 4850.0,
+    caption: 'Total cumulative outlay sanctioned under current session (788 Constituencies)',
+    trend: '+4.2% YoY'
+  },
+  flaggedRiskOutlay: {
+    value: '₹412.35 Cr',
+    rawCrores: 412.35,
+    caption: 'Sanctioned funds flagged by AI multi-factor risk engine requiring supervisory audit',
+    percentage: '8.5% of total outlay'
+  },
+  criticalAnomalies: {
+    value: '142 Works',
+    count: 142,
+    caption: 'High & Critical severity works triggering collusion, tender splitting, or ghost assets',
+    urgentActionCount: 38
+  },
+  dataQualityResolved: {
+    value: '1,280 Records',
+    count: 1280,
+    caption: 'Data ingestion discrepancies auto-reconciled (LGD codes, GPS coordinates, GSTIN)',
+    successRate: '99.4% clean rate'
+  }
+};
+
+export const RISK_SEVERITY_BREAKDOWN = {
+  critical: { label: 'Critical Risk', count: 38, amountCr: 124.50, color: '#D32F2F', scoreRange: '80-100' },
+  warning: { label: 'High Warning', count: 104, amountCr: 287.85, color: '#F57C00', scoreRange: '60-79' },
+  moderate: { label: 'Moderate Risk', count: 312, amountCr: 418.20, color: '#FBC02D', scoreRange: '40-59' },
+  standard: { label: 'Standard / Cleared', count: 2450, amountCr: 4019.45, color: '#2E7D32', scoreRange: '0-39' }
+};
+
+export const SECTOR_ALLOCATION = [
+  { sector: 'Drinking Water & Sanitation', sanctionedCr: 1240.0, flaggedCr: 98.4, share: '25.6%', icon: 'Droplet' },
+  { sector: 'Education & Digital Classrooms', sanctionedCr: 980.5, flaggedCr: 82.1, share: '20.2%', icon: 'GraduationCap' },
+  { sector: 'Rural Roads & Culverts', sanctionedCr: 890.0, flaggedCr: 112.5, share: '18.4%', icon: 'Milestone' },
+  { sector: 'Healthcare & Diagnostic Units', sanctionedCr: 720.0, flaggedCr: 64.2, share: '14.8%', icon: 'Stethoscope' },
+  { sector: 'Community Assets & Halls', sanctionedCr: 490.0, flaggedCr: 34.0, share: '10.1%', icon: 'Home' },
+  { sector: 'Renewable & Solar Streetlights', sanctionedCr: 310.5, flaggedCr: 12.8, share: '6.4%', icon: 'Sun' },
+  { sector: 'Irrigation & Flood Drainage', sanctionedCr: 219.0, flaggedCr: 8.35, share: '4.5%', icon: 'Waves' }
+];
+
+export const MPLADS_WORKS = [
+  {
+    id: 'MPLADS-2024-UP-0889',
+    title: 'Installation of 12 Solar High-Mast RO Drinking Water Plants in Sevapuri Block',
+    sector: 'Drinking Water & Sanitation',
+    mpName: 'Shri Narendra Modi',
+    house: 'Lok Sabha',
+    constituency: 'Varanasi',
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    sanctionedAmountLakhs: 96.8,
+    disbursedPercent: 85,
+    physicalProgressPercent: 12,
+    contractor: 'Apex Purvanchal Buildtech Ltd',
+    contractorGstin: '09AAACA4489M1Z8',
+    riskScore: 94,
+    riskLevel: 'critical',
+    triggerReason: 'Physical progress certified at 12% after 180 days while 85% fund disbursed; contractor GSTIN marked inactive on GST Portal',
+    coordinates: [25.3176, 82.9739],
+    sanctionDate: '2024-03-14',
+    implementingAgency: 'DRDA Varanasi',
+    nodalOfficer: 'Shri A. K. Rai (Executive Engineer)',
+    disparityIndex: 73,
+    status: 'Pending Supervisory Audit',
+    forensics: [
+      { rule: 'Fund Disbursal vs Ground Progress Asymmetry', severity: 'Critical', detail: '85% financial release against 12% civil foundation work (Variance: +73%).' },
+      { rule: 'Vendor Tax Compliance Anomaly', severity: 'Critical', detail: 'GSTIN 09AAACA4489M1Z8 has been in "Suspended" status since October 2024.' },
+      { rule: 'Geo-tagging Liveness Mismatch', severity: 'Warning', detail: 'Uploaded photos in e-Sakshi portal contain identical EXIF camera hashes from a 2022 project.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-UP-0412',
+    title: 'Construction of Sub-Centre Health Clinic & Diagnostic Wing at Cholapur',
+    sector: 'Healthcare & Diagnostic Units',
+    mpName: 'Shri Narendra Modi',
+    house: 'Lok Sabha',
+    constituency: 'Varanasi',
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    sanctionedAmountLakhs: 84.5,
+    disbursedPercent: 95,
+    physicalProgressPercent: 92,
+    contractor: 'Kashi Urban Infrastructure Pvt Ltd',
+    contractorGstin: '09AAACK8129C1Z2',
+    riskScore: 32,
+    riskLevel: 'standard',
+    triggerReason: 'Routine milestone verification passed; all UCs submitted within stipulated 90-day window',
+    coordinates: [25.4312, 83.0514],
+    sanctionDate: '2024-01-18',
+    implementingAgency: 'PWD Varanasi (Provincial Div)',
+    nodalOfficer: 'Er. Rajeshwar Singh',
+    disparityIndex: 3,
+    status: 'Verified & Cleared',
+    forensics: [
+      { rule: 'Milestone Timeline Adherence', severity: 'Standard', detail: 'Civil works completed 14 days ahead of scheduled contract deadline.' },
+      { rule: 'Vendor Integrity Check', severity: 'Standard', detail: 'Valid active GSTIN and clear PFMS vendor bank mapping.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-MH-1102',
+    title: 'Solarization of 25 Zilla Parishad Rural Schools in Haveli Block',
+    sector: 'Education & Digital Classrooms',
+    mpName: 'Smt. Supriya Sule',
+    house: 'Lok Sabha',
+    constituency: 'Baramati',
+    district: 'Pune',
+    state: 'Maharashtra',
+    sanctionedAmountLakhs: 48.2,
+    disbursedPercent: 60,
+    physicalProgressPercent: 20,
+    contractor: 'Sahyadri Green Energies LLP',
+    contractorGstin: '27AABCS9192L1Z5',
+    riskScore: 88,
+    riskLevel: 'critical',
+    triggerReason: 'Split-tender threshold evasion: 5 contiguous work orders of ₹9.8L issued within 72 hours to bypass e-tender mandatory scrutiny',
+    coordinates: [18.5204, 73.8567],
+    sanctionDate: '2024-04-10',
+    implementingAgency: 'Zilla Parishad Pune',
+    nodalOfficer: 'Smt. Vandana Mane (BDO)',
+    disparityIndex: 40,
+    status: 'Under Freeze Consideration',
+    forensics: [
+      { rule: 'Artificial Tender Fragmentation (Clause 4.1)', severity: 'Critical', detail: 'Work broken into 5 orders under ₹10.00 Lakh threshold to avoid national GeM/e-procurement.' },
+      { rule: 'Single IP Bid Submission', severity: 'High', detail: 'All 3 competitor bids submitted from the identical broadband IP address.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-BR-0731',
+    title: 'Reinforced Cement Concrete Link Road from NH-31 to Bakhtiyarpur Ghat',
+    sector: 'Rural Roads & Culverts',
+    mpName: 'Shri Ravi Shankar Prasad',
+    house: 'Lok Sabha',
+    constituency: 'Patna Sahib',
+    district: 'Patna',
+    state: 'Bihar',
+    sanctionedAmountLakhs: 145.0,
+    disbursedPercent: 90,
+    physicalProgressPercent: 35,
+    contractor: 'Magadh Nirman Infrastructure',
+    contractorGstin: '10AABCM3312Q1Z9',
+    riskScore: 91,
+    riskLevel: 'critical',
+    triggerReason: 'Duplicate geo-coordinates detected: 100% spatial overlap with state PMGSY-III road asset sanctioned in FY2023',
+    coordinates: [25.5941, 85.1376],
+    sanctionDate: '2024-02-28',
+    implementingAgency: 'RWD Patna Works Div',
+    nodalOfficer: 'Er. Manoj Kumar Choudhary',
+    disparityIndex: 55,
+    status: 'Flagged for Vigilance Inquiry',
+    forensics: [
+      { rule: 'Spatial Asset Duplication', severity: 'Critical', detail: 'Survey of India GIS coordinates match PMGSY Road Asset #BR-PAT-092 (Asset collision: 98.6%).' },
+      { rule: 'Double Invoicing Risk', severity: 'Critical', detail: 'Contractor billed identical gravel volume vouchers to both state and central accounts.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-RJ-0544',
+    title: 'Installation of 80 Deep Borewell Handpumps in Dudu Tehsil',
+    sector: 'Drinking Water & Sanitation',
+    mpName: 'Shri Ramcharan Bohra',
+    house: 'Lok Sabha',
+    constituency: 'Jaipur',
+    district: 'Jaipur',
+    state: 'Rajasthan',
+    sanctionedAmountLakhs: 62.0,
+    disbursedPercent: 50,
+    physicalProgressPercent: 45,
+    contractor: 'Marwar Jal Projects Ltd',
+    contractorGstin: '08AABCM7761P1Z4',
+    riskScore: 72,
+    riskLevel: 'warning',
+    triggerReason: 'Repeated contractor awards: 8th consecutive water contract awarded to single entity across 6 months; Herfindahl monopoly index 0.82',
+    coordinates: [26.9124, 75.7873],
+    sanctionDate: '2024-05-02',
+    implementingAgency: 'PHED Jaipur Rural',
+    nodalOfficer: 'Shri Dinesh Gehlot (SE)',
+    disparityIndex: 5,
+    status: 'Under Review',
+    forensics: [
+      { rule: 'Contractor Concentration / Monopoly', severity: 'High', detail: 'Single entity controls 78% of all water sanctions in Jaipur Rural district.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-KA-0922',
+    title: 'Upgradation of Science Laboratories in 14 Govt Pre-University Colleges',
+    sector: 'Education & Digital Classrooms',
+    mpName: 'Shri Tejasvi Surya',
+    house: 'Lok Sabha',
+    constituency: 'Bangalore South',
+    district: 'Bengaluru Urban',
+    state: 'Karnataka',
+    sanctionedAmountLakhs: 110.0,
+    disbursedPercent: 75,
+    physicalProgressPercent: 72,
+    contractor: 'Karnataka Educational Supplies Co',
+    contractorGstin: '29AABCK1098F1Z3',
+    riskScore: 28,
+    riskLevel: 'standard',
+    triggerReason: 'Asset delivery verified via RFID tagging; geotagged lab inventory complete',
+    coordinates: [12.9716, 77.5946],
+    sanctionDate: '2024-01-05',
+    implementingAgency: 'DPI Karnataka',
+    nodalOfficer: 'Smt. Jayanthi Murthy',
+    disparityIndex: 3,
+    status: 'Verified & Cleared',
+    forensics: [
+      { rule: 'Inventory Verification', severity: 'Standard', detail: 'Complete QR code scanning verified by external block auditor.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-AS-0318',
+    title: 'Construction of Multi-Purpose Flood Shelter & Community Asset at Palashbari',
+    sector: 'Community Assets & Halls',
+    mpName: 'Smt. Queen Oja',
+    house: 'Lok Sabha',
+    constituency: 'Gauhati',
+    district: 'Kamrup',
+    state: 'Assam',
+    sanctionedAmountLakhs: 125.0,
+    disbursedPercent: 70,
+    physicalProgressPercent: 30,
+    contractor: 'Brahmaputra Structural Engineers',
+    contractorGstin: '18AABCB6621R1Z1',
+    riskScore: 78,
+    riskLevel: 'warning',
+    triggerReason: 'Unapproved structural plan deviation; 9-month delay in second tranche utilization certificate',
+    coordinates: [26.1445, 91.7362],
+    sanctionDate: '2023-11-20',
+    implementingAgency: 'PWD Assam (Building Div)',
+    nodalOfficer: 'Er. Hemanta Kalita',
+    disparityIndex: 40,
+    status: 'Pending Physical Verification',
+    forensics: [
+      { rule: 'Utilization Certificate (UC) Delay', severity: 'High', detail: 'Overdue by 270 days past standard 90-day MoSPI ceiling.' },
+      { rule: 'Structural Scope Modification', severity: 'Moderate', detail: 'Floor area reduced by 22% without revised administrative sanction.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-TN-0651',
+    title: 'Modernization of Neonatal Care Units in Madurai Government Medical College',
+    sector: 'Healthcare & Diagnostic Units',
+    mpName: 'Shri Su. Venkatesan',
+    house: 'Lok Sabha',
+    constituency: 'Madurai',
+    district: 'Madurai',
+    state: 'Tamil Nadu',
+    sanctionedAmountLakhs: 180.0,
+    disbursedPercent: 88,
+    physicalProgressPercent: 85,
+    contractor: 'Pandian Meditech Devices Corp',
+    contractorGstin: '33AABCP4412M1Z0',
+    riskScore: 22,
+    riskLevel: 'standard',
+    triggerReason: 'Biomedical equipment calibrated, commissioned, and operational under state health registry',
+    coordinates: [9.9252, 78.1198],
+    sanctionDate: '2023-10-15',
+    implementingAgency: 'TN Medical Services Corp (TNMSC)',
+    nodalOfficer: 'Dr. M. Senthil Nathan',
+    disparityIndex: 3,
+    status: 'Verified & Cleared',
+    forensics: [
+      { rule: 'Equipment Commissioning Protocol', severity: 'Standard', detail: 'All incubators certified by National Accreditation Board for Testing and Calibration Laboratories (NABL).' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-GJ-0219',
+    title: 'Construction of Cold Storage Sorting Shed & Packhouse for Milk Producers',
+    sector: 'Community Assets & Halls',
+    mpName: 'Dr. S. Jaishankar',
+    house: 'Rajya Sabha',
+    constituency: 'Gujarat (State Representative)',
+    district: 'Anand',
+    state: 'Gujarat',
+    sanctionedAmountLakhs: 98.0,
+    disbursedPercent: 80,
+    physicalProgressPercent: 78,
+    contractor: 'Charotar Agro Infra Pvt Ltd',
+    contractorGstin: '24AABCC8811K1Z7',
+    riskScore: 35,
+    riskLevel: 'standard',
+    triggerReason: 'Physical inspection completed by District Planning Committee with geo-tag evidence',
+    coordinates: [22.5645, 72.9289],
+    sanctionDate: '2024-02-10',
+    implementingAgency: 'Anand District Panchayat',
+    nodalOfficer: 'Shri B. R. Patel (DDO)',
+    disparityIndex: 2,
+    status: 'Verified & Cleared',
+    forensics: [
+      { rule: 'Asset Utility Certification', severity: 'Standard', detail: 'Certified compliant with MPLADS 2023 Community Dairy Guidelines.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-UP-0994',
+    title: 'Construction of Commercial Market Stalls near Cantt Railway Station',
+    sector: 'Community Assets & Halls',
+    mpName: 'Shri Narendra Modi',
+    house: 'Lok Sabha',
+    constituency: 'Varanasi',
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    sanctionedAmountLakhs: 115.0,
+    disbursedPercent: 40,
+    physicalProgressPercent: 15,
+    contractor: 'Kashi Real Estate & Projects',
+    contractorGstin: '09AABCK5544N1Z6',
+    riskScore: 96,
+    riskLevel: 'critical',
+    triggerReason: 'Prohibited asset category violation: Commercial shopping stalls violate Clause 5.2 (Prohibited List of MPLADS Guidelines 2023)',
+    coordinates: [25.3289, 82.9868],
+    sanctionDate: '2024-06-01',
+    implementingAgency: 'Varanasi Municipal Corp (VNN)',
+    nodalOfficer: 'Shri Akshat Verma (Municipal Commissioner)',
+    disparityIndex: 25,
+    status: 'Immediate Outlay Freeze Ordered',
+    forensics: [
+      { rule: 'Ineligible Item on Negative List', severity: 'Critical', detail: 'Commercial income-generating kiosks are strictly barred from MPLADS financing under MoSPI norms.' },
+      { rule: 'Unauthorized Tender Initiation', severity: 'High', detail: 'Executive Engineer issued tender without prior formal District Collector sanction.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-MH-0847',
+    title: 'Desilting and Deepening of 6 Percolation Tanks in Baramati Drought Belt',
+    sector: 'Irrigation & Flood Drainage',
+    mpName: 'Smt. Supriya Sule',
+    house: 'Lok Sabha',
+    constituency: 'Baramati',
+    district: 'Pune',
+    state: 'Maharashtra',
+    sanctionedAmountLakhs: 75.0,
+    disbursedPercent: 65,
+    physicalProgressPercent: 60,
+    contractor: 'Vidarbha Water Solutions',
+    contractorGstin: '27AABCV3322E1Z8',
+    riskScore: 48,
+    riskLevel: 'moderate',
+    triggerReason: 'Drone volumetric earthwork verification differs by 18% from contractor measurement book',
+    coordinates: [18.1517, 74.5771],
+    sanctionDate: '2024-03-01',
+    implementingAgency: 'Water Conservation Dept Pune',
+    nodalOfficer: 'Er. Sachin Shinde',
+    disparityIndex: 5,
+    status: 'Pending Cross-Audit',
+    forensics: [
+      { rule: 'Volumetric Excavation Mismatch', severity: 'Moderate', detail: 'Satellite radar backscatter indicates slightly lower excavation volume than billed.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-OR-0455',
+    title: 'Installation of 500 Solar LED Street Lighting Systems in Sambalpur Tribal Villages',
+    sector: 'Renewable & Solar Streetlights',
+    mpName: 'Shri Dharmendra Pradhan',
+    house: 'Lok Sabha',
+    constituency: 'Sambalpur',
+    district: 'Sambalpur',
+    state: 'Odisha',
+    sanctionedAmountLakhs: 85.0,
+    disbursedPercent: 90,
+    physicalProgressPercent: 88,
+    contractor: 'Utkal Solar Grid Solutions',
+    contractorGstin: '21AABCU7711B1Z2',
+    riskScore: 24,
+    riskLevel: 'standard',
+    triggerReason: 'All 500 streetlights equipped with IoT GSM remote monitoring chips reporting daily battery health',
+    coordinates: [21.4669, 83.9812],
+    sanctionDate: '2023-12-12',
+    implementingAgency: 'OREDA Sambalpur',
+    nodalOfficer: 'Shri P. K. Mohapatra',
+    disparityIndex: 2,
+    status: 'Verified & Cleared',
+    forensics: [
+      { rule: 'IoT Smart Grid Telemetry', severity: 'Standard', detail: 'Automated 100% telemetry uptime confirmed by Central Monitoring Unit.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-KL-0382',
+    title: 'Construction of Coastal Fishermen Community Multipurpose Cyclone Center',
+    sector: 'Community Assets & Halls',
+    mpName: 'Shri Shashi Tharoor',
+    house: 'Lok Sabha',
+    constituency: 'Thiruvananthapuram',
+    district: 'Thiruvananthapuram',
+    state: 'Kerala',
+    sanctionedAmountLakhs: 160.0,
+    disbursedPercent: 82,
+    physicalProgressPercent: 40,
+    contractor: 'Malabar Coastal Construction Corp',
+    contractorGstin: '32AABCM9901C1Z4',
+    riskScore: 74,
+    riskLevel: 'warning',
+    triggerReason: 'Coastal Regulation Zone (CRZ) clearance document expired prior to contract agreement signing',
+    coordinates: [8.5241, 76.9366],
+    sanctionDate: '2023-09-08',
+    implementingAgency: 'Harbour Engineering Dept',
+    nodalOfficer: 'Er. K. Suresh Kumar',
+    disparityIndex: 42,
+    status: 'Statutory Clearance Review',
+    forensics: [
+      { rule: 'Statutory Compliance Defect', severity: 'High', detail: 'CRZ Category-I clearance not re-validated within mandatory 3-year statutory cycle.' }
+    ]
+  },
+  {
+    id: 'MPLADS-2024-WB-0589',
+    title: 'Repair and Bituminous Resurfacing of Rural Arterial Road to Diamond Harbour',
+    sector: 'Rural Roads & Culverts',
+    mpName: 'Shri Abhishek Banerjee',
+    house: 'Lok Sabha',
+    constituency: 'Diamond Harbour',
+    district: 'South 24 Parganas',
+    state: 'West Bengal',
+    sanctionedAmountLakhs: 130.0,
+    disbursedPercent: 95,
+    physicalProgressPercent: 28,
+    contractor: 'Sundarbans Heavy Civil Works',
+    contractorGstin: '19AABCS8823K1Z9',
+    riskScore: 93,
+    riskLevel: 'critical',
+    triggerReason: 'Disbursement of final payment tranche without uploading certified lab road core density test report',
+    coordinates: [22.1965, 88.2014],
+    sanctionDate: '2024-01-22',
+    implementingAgency: 'Zilla Parishad South 24 Parganas',
+    nodalOfficer: 'Shri Subrata Das (District Engineer)',
+    disparityIndex: 67,
+    status: 'Pending Vigilance Charge Sheet',
+    forensics: [
+      { rule: 'Quality Control Mandatory Test Bypass', severity: 'Critical', detail: 'Compaction and bitumen binder test certificates omitted from PFMS expenditure voucher.' },
+      { rule: 'Disparity Outlier', severity: 'Critical', detail: '95% disbursed against 28% field completion recorded in local public complaint repository.' }
+    ]
+  }
+];
+
+export const INGESTION_AUDIT_LOGS = [
+  {
+    id: 'AUD-2026-9941',
+    timestamp: '16 Sep 2026, 23:45:12 IST',
+    issueCategory: 'LGD Code Mismatch',
+    sourceField: 'district_name / lgd_entity_code',
+    rawVal: 'Kashi (Legacy District Ref)',
+    resolvedVal: 'Varanasi [LGD Code: 187]',
+    ruleApplied: 'LGD Fuzzy Lexical & Census 2011 Entity Resolver (Score: 99.4%)',
+    status: 'Auto-Resolved',
+    confidence: '99.4%',
+    datasetOrigin: 'UP e-District Portal Sync Batch #819'
+  },
+  {
+    id: 'AUD-2026-9940',
+    timestamp: '16 Sep 2026, 22:31:05 IST',
+    issueCategory: 'Inverted GPS Coordinates',
+    sourceField: 'geo_coordinates [lat, lon]',
+    rawVal: '82.9739, 25.3176',
+    resolvedVal: '25.3176 N, 82.9739 E (Validated within Varanasi bounding polygon)',
+    ruleApplied: 'Boustrophedon Coordinate Inversion & Geofence Boundary Check',
+    status: 'Auto-Resolved',
+    confidence: '100%',
+    datasetOrigin: 'Mobile e-Sakshi Field Survey App v3.2'
+  },
+  {
+    id: 'AUD-2026-9939',
+    timestamp: '16 Sep 2026, 21:14:48 IST',
+    issueCategory: 'Invalid GSTIN Checksum',
+    sourceField: 'vendor_gstin',
+    rawVal: '09AAACA4489M1Z8 (Inactive/Flagged)',
+    resolvedVal: 'Cross-verified with GSTN API: Flagged "SUSPENDED" on 12-Oct-2024',
+    ruleApplied: 'Direct GSTN Verification Gateway & Modulo-36 Checksum Validation',
+    status: 'Vigilance Triggered',
+    confidence: '100%',
+    datasetOrigin: 'PFMS Treasury Voucher Feed #1104'
+  },
+  {
+    id: 'AUD-2026-9938',
+    timestamp: '16 Sep 2026, 19:50:22 IST',
+    issueCategory: 'Date Sequence Inversion',
+    sourceField: 'sanction_date vs exp_date',
+    rawVal: 'Exp: 2024-01-10; Sanction: 2024-02-15',
+    resolvedVal: 'Re-sequenced to Preliminary Survey Advance; Flagged for Retrospective Sanction Review',
+    ruleApplied: 'General Financial Rules (GFR 2017) Rule 130 Chronology Validator',
+    status: 'Auto-Resolved',
+    confidence: '96.2%',
+    datasetOrigin: 'State Nodal Authority Batch XML'
+  },
+  {
+    id: 'AUD-2026-9937',
+    timestamp: '16 Sep 2026, 17:18:30 IST',
+    issueCategory: 'Duplicate PFMS Voucher ID',
+    sourceField: 'pfms_voucher_ref_no',
+    rawVal: 'VCHR-2024-00982-A (Duplicate in 2 Batches)',
+    resolvedVal: 'Deduplicated via SHA-256 Payload Fingerprinting; Duplicate Transaction Rejected',
+    ruleApplied: 'Idempotent Transaction Dedup Engine',
+    status: 'Auto-Resolved',
+    confidence: '100%',
+    datasetOrigin: 'Central PFMS Mirror Stream'
+  },
+  {
+    id: 'AUD-2026-9936',
+    timestamp: '16 Sep 2026, 15:42:19 IST',
+    issueCategory: 'Sanction Outlay Ceiling Exceeded',
+    sourceField: 'sanction_amount_lakhs',
+    rawVal: '₹10,50,00,000 (Exceeds Single Work ₹5 Cr Cap without Special MoSPI Waiver)',
+    resolvedVal: 'Flagged for High-Value Sanction Committee Review (Clause 3.4)',
+    ruleApplied: 'Statutory MPLADS Sanction Ceiling Validator',
+    status: 'Manual Review Required',
+    confidence: '98.5%',
+    datasetOrigin: 'District Planning Cell Data Dump'
+  },
+  {
+    id: 'AUD-2026-9935',
+    timestamp: '16 Sep 2026, 14:10:04 IST',
+    issueCategory: 'Sector Nomenclature Discrepancy',
+    sourceField: 'work_sector_name',
+    rawVal: 'Pey-jal / Tube Well Construction',
+    resolvedVal: 'Standardized to: Drinking Water & Sanitation (Code SEC-01)',
+    ruleApplied: 'Indic NLP Synonym Standardizer & MoSPI Schema Taxonomy v4',
+    status: 'Auto-Resolved',
+    confidence: '99.8%',
+    datasetOrigin: 'State Panchayat MIS Interface'
+  },
+  {
+    id: 'AUD-2026-9934',
+    timestamp: '16 Sep 2026, 11:22:45 IST',
+    issueCategory: 'Incomplete Bank Account IFSC',
+    sourceField: 'contractor_bank_ifsc',
+    rawVal: 'SBIN000049 (10 chars - missing digit)',
+    resolvedVal: 'Resolved to SBIN0000494 (State Bank of India, Varanasi Main Branch)',
+    ruleApplied: 'RBI National IFSC Directory Regex and Branch Locator Service',
+    status: 'Auto-Resolved',
+    confidence: '97.5%',
+    datasetOrigin: 'PFMS Vendor Registration Form'
+  }
+];
+
+export const DISTRICT_ANALYTICS = [
+  { district: 'Varanasi', state: 'Uttar Pradesh', totalWorks: 128, flaggedCount: 14, riskOutlayCr: 32.4, monopolyIndex: '0.42 (Medium)', spendingVelocity: '78%' },
+  { district: 'Patna', state: 'Bihar', totalWorks: 112, flaggedCount: 19, riskOutlayCr: 45.2, monopolyIndex: '0.74 (High)', spendingVelocity: '62%' },
+  { district: 'Pune', state: 'Maharashtra', totalWorks: 154, flaggedCount: 11, riskOutlayCr: 28.6, monopolyIndex: '0.38 (Low)', spendingVelocity: '84%' },
+  { district: 'South 24 Parganas', state: 'West Bengal', totalWorks: 96, flaggedCount: 18, riskOutlayCr: 42.1, monopolyIndex: '0.81 (Critical)', spendingVelocity: '51%' },
+  { district: 'Jaipur', state: 'Rajasthan', totalWorks: 140, flaggedCount: 12, riskOutlayCr: 29.8, monopolyIndex: '0.68 (High)', spendingVelocity: '72%' },
+  { district: 'Kamrup', state: 'Assam', totalWorks: 88, flaggedCount: 9, riskOutlayCr: 21.0, monopolyIndex: '0.52 (Medium)', spendingVelocity: '66%' },
+  { district: 'Bengaluru Urban', state: 'Karnataka', totalWorks: 165, flaggedCount: 4, riskOutlayCr: 8.5, monopolyIndex: '0.24 (Healthy)', spendingVelocity: '91%' }
+];
