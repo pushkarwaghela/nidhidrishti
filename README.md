@@ -86,17 +86,70 @@ API Documentation will be available at `http://localhost:8000/docs`.
 
 ---
 
-## Hosting & 1-Click Deployment
+## Free Production Deployment
 
-### Deploying to Netlify
-1. Connect this repository to **Netlify**.
-2. Build command: `npm run build`
-3. Publish directory: `dist`
-*(A `public/_redirects` file is pre-configured for SPA routing).*
+The dashboard currently renders the sample dataset in `src/data/mockData.js`; it does
+not make requests to the FastAPI service. Therefore, deploy the frontend only for a
+working public demo. This is free on both Netlify and Vercel, and does not require
+environment variables or a database.
 
-### Deploying to Vercel
-1. Import this repository into **Vercel**.
-2. Framework Preset: **Vite**
-3. Build command: `npm run build`
-4. Output directory: `dist`
-*(A `vercel.json` rewrite file is pre-configured).*
+### Option A: Netlify (recommended for this repository)
+
+1. Push the repository to GitHub.
+2. Sign in at [Netlify](https://app.netlify.com/) and choose **Add new site >
+   Import an existing project**.
+3. Select the repository and use these settings:
+   - **Build command:** `npm run build`
+   - **Publish directory:** `dist`
+   - **Base directory:** leave blank
+4. Choose **Deploy site**.
+
+The repository already contains `public/_redirects`, so refreshing a nested
+React route will continue to work. Netlify automatically redeploys whenever the
+selected branch changes.
+
+### Option B: Vercel
+
+1. Sign in at [Vercel](https://vercel.com/) and choose **Add New > Project**.
+2. Import the GitHub repository.
+3. Keep **Framework Preset: Vite** and use:
+   - **Build command:** `npm run build`
+   - **Output directory:** `dist`
+4. Choose **Deploy**.
+
+The included `vercel.json` rewrites application routes to `index.html`, which
+prevents 404s after a browser refresh.
+
+### Optional: deploy the FastAPI backend for free
+
+The backend is a separate optional service. It uses in-memory seeded data, so
+changes made through the API are lost whenever the service restarts. To deploy it
+as a public API on [Render](https://render.com/):
+
+1. Create a **Web Service** from the same GitHub repository.
+2. Set **Root Directory** to `backend`.
+3. Set **Runtime** to `Python 3`.
+4. Set **Build command** to `pip install -r requirements.txt`.
+5. Set **Start command** to `uvicorn main:app --host 0.0.0.0 --port $PORT`.
+6. Choose the available **Free** instance and deploy.
+
+The API documentation will be available at
+`https://<your-service>.onrender.com/docs`. Free services may sleep when idle,
+so the first request after inactivity can take several seconds. The current
+frontend will still show its bundled sample data unless it is explicitly wired
+to this API.
+
+### Verify a deployment locally
+
+Run the same production build before deploying:
+
+```bash
+npm ci
+npm run build
+npm run preview
+```
+
+Open the preview URL printed by Vite and test navigation, the map, filters, and
+the audit modal. If the build fails with `'vite' is not recognized`, run
+`npm ci` from the repository root first; dependencies are intentionally not
+committed to Git.
