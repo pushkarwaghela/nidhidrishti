@@ -143,3 +143,47 @@ SEEDED_LOGS = [
         "datasetOrigin": "Mobile e-Sakshi Field Survey App v3.2"
     }
 ]
+
+DASHBOARD_SUMMARY = {
+    "totalSanctionedOutlay": {
+        "value": "₹4,850.00 Cr",
+        "rawCrores": 4850.0,
+        "caption": "Current session MPLADS outlay sanctioned across 788 parliamentary constituencies and 28 states/UTs",
+        "trend": "+4.2% YoY vs FY 2023-24"
+    },
+    "flaggedRiskOutlay": {
+        "value": "₹412.35 Cr",
+        "rawCrores": 412.35,
+        "caption": "Fund exposure flagged by AI-assisted risk engine for supervisory review, field verification, and compliance scrutiny",
+        "percentage": "8.5% of total sanctioned outlay"
+    },
+    "criticalAnomalies": {
+        "value": "142 Works",
+        "count": 142,
+        "caption": "High and critical-risk projects involving tender splitting, inactive vendor records, duplicate geotags, or fund-progress asymmetry",
+        "urgentActionCount": 38
+    },
+    "dataQualityResolved": {
+        "value": "1,280 Records",
+        "count": 1280,
+        "caption": "Auto-corrected field data issues: LGD mismatches, GPS inversions, GSTIN reconciliation, and district-to-asset mapping defects",
+        "successRate": "99.4% clean ingestion rate"
+    }
+}
+
+RISK_SEVERITY_BREAKDOWN = {
+    "critical": {"label": "Critical Risk", "count": 38, "amountCr": 124.50, "color": "#D32F2F", "scoreRange": "80-100"},
+    "warning": {"label": "High Warning", "count": 104, "amountCr": 287.85, "color": "#F57C00", "scoreRange": "60-79"},
+    "moderate": {"label": "Moderate Risk", "count": 312, "amountCr": 418.20, "color": "#FBC02D", "scoreRange": "40-59"},
+    "standard": {"label": "Standard / Cleared", "count": 2450, "amountCr": 4019.45, "color": "#2E7D32", "scoreRange": "0-39"}
+}
+
+SECTOR_ALLOCATION = [
+    {"sector": "Drinking Water & Sanitation", "sanctionedCr": 1240.0, "flaggedCr": 98.4, "share": "25.6%", "icon": "Droplet"},
+    {"sector": "Education & Digital Classrooms", "sanctionedCr": 980.5, "flaggedCr": 82.1, "share": "20.2%", "icon": "GraduationCap"},
+    {"sector": "Rural Roads & Culverts", "sanctionedCr": 890.0, "flaggedCr": 112.5, "share": "18.4%", "icon": "Milestone"},
+    {"sector": "Healthcare & Diagnostic Units", "sanctionedCr": 720.0, "flaggedCr": 64.2, "share": "14.8%", "icon": "Stethoscope"},
+    {"sector": "Community Assets & Halls", "sanctionedCr": 490.0, "flaggedCr": 34.0, "share": "10.1%", "icon": "Home"},
+    {"sector": "Renewable & Solar Streetlights", "sanctionedCr": 310.5, "flaggedCr": 12.8, "share": "6.4%", "icon": "Sun"},
+    {"sector": "Irrigation & Flood Drainage", "sanctionedCr": 219.0, "flaggedCr": 8.35, "share": "4.5%", "icon": "Waves"}
+]

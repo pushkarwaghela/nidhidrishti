@@ -34,24 +34,78 @@ export default function RiskOverview({
 
   const isCitizen = currentRole?.id === 'citizen';
 
+  const executiveIntel = [
+    {
+      label: 'National Coverage',
+      value: '788 Constituencies',
+      detail: '18 states and 8 UTs under live risk surveillance'
+    },
+    {
+      label: 'Action Pressure',
+      value: '38 Priority Cases',
+      detail: 'Immediate inspection & freeze review queue'
+    },
+    {
+      label: 'AI Confidence',
+      value: '99.4%',
+      detail: 'Data quality auto-resolution accuracy rate'
+    }
+  ];
+
   return (
     <div className="risk-overview-page">
-      {/* Top Role-Sensitive Context Banner */}
-      <div className="page-header-banner">
-        <div className="page-title-group">
+      {/* Premium Government Hero Banner */}
+      <div className="page-header-banner premium-hero">
+        <div className="page-title-group hero-copy">
+          <div className="hero-kicker">
+            <span className="gov-badge">MoSPI • National Vigilance Console</span>
+          </div>
           <h1>{t.navDashboard}</h1>
           <p className="page-description">
-            Continuous real-time audit of parliamentary development expenditures, anomaly detection, and fund integrity metrics.
+            Continuous real-time audit of parliamentary development expenditures, anomaly detection, and fund integrity metrics across the national development pipeline.
           </p>
+          <div className="hero-cta-row">
+            <button
+              type="button"
+              className="gov-btn gov-btn-primary"
+              onClick={() => onNavigateToTab('audit-queue')}
+            >
+              Review Risk Queue
+            </button>
+            <button
+              type="button"
+              className="gov-btn gov-btn-secondary"
+              onClick={() => onNavigateToTab('sandbox')}
+            >
+              Open AI Sandbox
+            </button>
+          </div>
         </div>
 
-        <div className="role-banner-tag" title="Demonstrating active role-based data view">
-          <div>
-            <div className="role-title">
-              {lang === 'hi' && currentRole.titleHi ? currentRole.titleHi : currentRole.title}
+        <div className="hero-panel" title="Demonstrating active role-based data view">
+          <div className="hero-panel-topbar">
+            <span>Live operational status</span>
+            <span className="status-pill">Online</span>
+          </div>
+
+          <div className="hero-role-label">
+            {lang === 'hi' && currentRole.titleHi ? currentRole.titleHi : currentRole.title}
+          </div>
+
+          <div className="hero-role-scope">
+            {lang === 'hi' && currentRole.scopeHi ? currentRole.scopeHi : currentRole.scope}
+          </div>
+
+          <div className="hero-role-officer">{currentRole.officer}</div>
+
+          <div className="hero-mini-grid">
+            <div>
+              <div className="mini-label">Flagged</div>
+              <div className="mini-value">₹412.35 Cr</div>
             </div>
-            <div className="role-scope">
-              {lang === 'hi' && currentRole.scopeHi ? currentRole.scopeHi : currentRole.scope} — {currentRole.officer}
+            <div>
+              <div className="mini-label">Priority</div>
+              <div className="mini-value">38 Cases</div>
             </div>
           </div>
         </div>
@@ -106,6 +160,16 @@ export default function RiskOverview({
           </div>
         </div>
       )}
+
+      <section className="executive-intel-grid" aria-label="Executive intelligence summary">
+        {executiveIntel.map((item) => (
+          <div key={item.label} className="intel-card">
+            <div className="intel-label">{item.label}</div>
+            <div className="intel-value">{item.value}</div>
+            <div className="intel-detail">{item.detail}</div>
+          </div>
+        ))}
+      </section>
 
       {/* 4 Primary KPI Summary Cards */}
       <section className="kpi-cards-grid" aria-label="Executive Outlay Summary">

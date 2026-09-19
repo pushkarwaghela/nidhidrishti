@@ -71,26 +71,26 @@ export const SUMMARY_METRICS = {
   totalSanctionedOutlay: {
     value: '₹4,850.00 Cr',
     rawCrores: 4850.0,
-    caption: 'Total cumulative outlay sanctioned under current session (788 Constituencies)',
-    trend: '+4.2% YoY'
+    caption: 'Current session MPLADS outlay sanctioned across 788 parliamentary constituencies and 28 states/UTs',
+    trend: '+4.2% YoY vs FY 2023-24'
   },
   flaggedRiskOutlay: {
     value: '₹412.35 Cr',
     rawCrores: 412.35,
-    caption: 'Sanctioned funds flagged by AI multi-factor risk engine requiring supervisory audit',
-    percentage: '8.5% of total outlay'
+    caption: 'Fund exposure flagged by AI-assisted risk engine for supervisory review, field verification, and compliance scrutiny',
+    percentage: '8.5% of total sanctioned outlay'
   },
   criticalAnomalies: {
     value: '142 Works',
     count: 142,
-    caption: 'High & Critical severity works triggering collusion, tender splitting, or ghost assets',
+    caption: 'High and critical-risk projects involving tender splitting, inactive vendor records, duplicate geotags, or fund-progress asymmetry',
     urgentActionCount: 38
   },
   dataQualityResolved: {
     value: '1,280 Records',
     count: 1280,
-    caption: 'Data ingestion discrepancies auto-reconciled (LGD codes, GPS coordinates, GSTIN)',
-    successRate: '99.4% clean rate'
+    caption: 'Auto-corrected field data issues: LGD mismatches, GPS inversions, GSTIN reconciliation, and district-to-asset mapping defects',
+    successRate: '99.4% clean ingestion rate'
   }
 };
 
