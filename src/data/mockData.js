@@ -8,38 +8,62 @@ export const ROLES = [
   {
     id: 'ministry',
     title: 'Ministry (MoSPI Central Vigilance)',
+    titleHi: 'मंत्रालय (सांख्यिकी एवं कार्यक्रम कार्यान्वयन केंद्रीय सतर्कता)',
     scope: 'National Aggregate Overview',
+    scopeHi: 'अखिल भारतीय समग्र निगरानी',
     officer: 'Dr. Rajiv Kumar Sharma, IAS',
     designation: 'Additional Secretary & CVO, MoSPI',
     badge: 'National Vigilance Admin',
+    badgeHi: 'राष्ट्रीय सतर्कता प्रशासक',
     welcomeMessage: 'Welcome to Central Vigilance Directorate — Monitoring 543 Lok Sabha & 245 Rajya Sabha Outlays'
   },
   {
     id: 'sna',
     title: 'State Nodal Authority (SNA - Uttar Pradesh)',
+    titleHi: 'राज्य नोडल प्राधिकरण (उत्तर प्रदेश योजना विभाग)',
     scope: 'State Planning & Inter-District Audit',
+    scopeHi: 'राज्य योजना एवं अंतर-जिला लेखापरीक्षा',
     officer: 'Smt. Ananya Srivastava, IAS',
     designation: 'Principal Secretary (Planning), Govt of UP',
     badge: 'State Nodal Officer',
+    badgeHi: 'राज्य नोडल अधिकारी',
     welcomeMessage: 'State Surveillance Console — 80 Parliamentary Constituencies (UP Chapter)'
   },
   {
     id: 'district',
     title: 'District Authority (DM / Collector - Varanasi)',
+    titleHi: 'जिला प्राधिकरण (जिलाधिकारी / कलेक्टर - वाराणसी)',
     scope: 'District Execution & Site Inspections',
+    scopeHi: 'जिला निष्पादन एवं स्थलीय निरीक्षण',
     officer: 'Shri S. Rajalingam, IAS',
     designation: 'District Magistrate & District Authority, Varanasi',
     badge: 'District Magistrate Office',
+    badgeHi: 'जिलाधिकारी कार्यालय',
     welcomeMessage: 'Varanasi District Monitoring Console — 14 Blocks & 1,280 Panchayat Wards'
   },
   {
     id: 'mp',
     title: 'Member of Parliament (MP - Varanasi Constituency)',
+    titleHi: 'संसद सदस्य (सांसद - वाराणसी संसदीय क्षेत्र)',
     scope: 'Constituency Development & Sanction Pipeline',
+    scopeHi: 'संसदीय क्षेत्र विकास एवं संस्तुति ट्रैकिंग',
     officer: 'Shri Narendra Modi',
     designation: 'Member of Parliament, Lok Sabha (Varanasi, UP)',
     badge: 'Hon’ble MP Dashboard',
+    badgeHi: 'माननीय सांसद डैशबोर्ड',
     welcomeMessage: 'Constituency Progress Portal — Track Sanctions, Citizen Feedback & Asset Handover'
+  },
+  {
+    id: 'citizen',
+    title: 'Citizen / Whistleblower (Jan-Bhagidari & CPGRAMS)',
+    titleHi: 'नागरिक / सतर्कता सूचनाकर्ता (जन-भागीदारी)',
+    scope: 'Public Transparency & Whistleblower Grievances',
+    scopeHi: 'सार्वजनिक पारदर्शिता एवं नागरिक शिकायतें',
+    officer: 'Citizen of India (जन साधारण)',
+    designation: 'Public Transparency & Vigilance Whistleblower',
+    badge: 'Jan-Drishti Portal',
+    badgeHi: 'जन-दृष्टि पोर्टल',
+    welcomeMessage: 'Jan-Bhagidari Transparency Portal — Track your MP’s spending, inspect asset photos & submit whistleblower reports directly to the District Collector.'
   }
 ];
 
@@ -584,3 +608,382 @@ export const DISTRICT_ANALYTICS = [
   { district: 'Kamrup', state: 'Assam', totalWorks: 88, flaggedCount: 9, riskOutlayCr: 21.0, monopolyIndex: '0.52 (Medium)', spendingVelocity: '66%' },
   { district: 'Bengaluru Urban', state: 'Karnataka', totalWorks: 165, flaggedCount: 4, riskOutlayCr: 8.5, monopolyIndex: '0.24 (Healthy)', spendingVelocity: '91%' }
 ];
+
+// ==========================================================================
+// Bilingual Internationalization Dictionary (English & Rajbhasha Hindi)
+// ==========================================================================
+export const I18N_STRINGS = {
+  en: {
+    portalName: 'NidhiDrishti',
+    portalHindi: 'निधिदृष्टि',
+    portalSubtitle: 'Ministry of Statistics and Programme Implementation',
+    portalSubHindi: 'सांख्यिकी एवं कार्यक्रम कार्यान्वयन मंत्रालय | Government of India',
+    badgeText: 'MPLADS AI VIGILANCE',
+    liveSync: 'e-Sakshi Live Sync',
+    roleLabel: 'Active Official Persona',
+    tickerAlert: '🚨 DIRECTIVE: Mandatory 10% annual physical verification by District Collectors before Q3 tranche release | e-Sakshi 2.0 API gateway operational | 142 works under active surveillance.',
+    navDashboard: 'Risk Overview Dashboard',
+    navHeatmap: 'Geospatial Risk Heatmap',
+    navQueue: 'AI Anomaly & Risk Queue',
+    navSandbox: '⚡ AI Risk Engine Sandbox',
+    navQuality: 'Ingestion Data Quality Trail',
+    navAnalytics: 'Constituency & Analytics',
+    navGuidelines: 'MPLADS Guidelines & SOPs',
+    navCitizenGrievance: 'Jan-Drishti Whistleblower',
+    kpiSanctioned: 'Total Sanctioned Outlay',
+    kpiFlagged: 'Flagged Risk Outlay',
+    kpiCritical: 'Critical Anomalies',
+    kpiClean: 'Data Quality Resolved',
+    inspectDossier: 'Inspect Forensic Dossier',
+    freezeOutlay: 'Freeze Outlay Disbursement',
+    orderInspection: 'Order Physical Site Inspection',
+    generateOrder: 'Generate Official Order (G.O.)',
+    dismissFlag: 'Dismiss / Mark Cleared',
+    reportGhostAsset: 'Report Ghost Asset / Grievance',
+    aiScore: 'AI Risk Score',
+    riskCritical: 'Critical Risk',
+    riskWarning: 'High Warning',
+    riskModerate: 'Moderate Risk',
+    riskStandard: 'Standard / Cleared'
+  },
+  hi: {
+    portalName: 'निधिदृष्टि',
+    portalHindi: 'NidhiDrishti',
+    portalSubtitle: 'सांख्यिकी एवं कार्यक्रम कार्यान्वयन मंत्रालय',
+    portalSubHindi: 'भारत सरकार | Government of India',
+    badgeText: 'सांसद निधि एआई निगरानी',
+    liveSync: 'ई-साक्षी सजीव समन्वय',
+    roleLabel: 'सक्रिय आधिकारिक पदभार',
+    tickerAlert: '🚨 आधिकारिक निर्देश: तृतीय त्रैमासिक किश्त से पूर्व जिलाधिकारियों द्वारा 10% अनिवार्य भौतिक सत्यापन पूर्ण किया जाए | ई-साक्षी 2.0 गेटवे सक्रिय | 142 कार्य निगरानी अधीन।',
+    navDashboard: 'जोखिम अवलोकन डैशबोर्ड',
+    navHeatmap: 'भू-स्थानिक जोखिम मानचित्र',
+    navQueue: 'एआई विसंगति एवं जोखिम सूची',
+    navSandbox: '⚡ एआई जोखिम इंजन सैंडबॉक्स',
+    navQuality: 'डेटा गुणवत्ता एवं ऑडिट ट्रेल',
+    navAnalytics: 'संसदीय क्षेत्र एवं विश्लेषण',
+    navGuidelines: 'सांसद निधि दिशानिर्देश एवं एसओपी',
+    navCitizenGrievance: 'जन-दृष्टि सतर्कता शिकायत',
+    kpiSanctioned: 'कुल स्वीकृत वित्तीय परिव्यय',
+    kpiFlagged: 'चिह्नित जोखिम परिव्यय',
+    kpiCritical: 'अति-संवेदनशील विसंगतियां',
+    kpiClean: 'स्वचालित शुद्ध डेटा रिकॉर्ड',
+    inspectDossier: 'फोरेंसिक डॉसियर देखें',
+    freezeOutlay: 'वित्तीय संवितरण पर रोक लगाएं',
+    orderInspection: 'स्थलीय भौतिक जांच आदेश दें',
+    generateOrder: 'आधिकारिक शासनादेश जारी करें',
+    dismissFlag: 'सत्यापित एवं स्वीकृत करें',
+    reportGhostAsset: 'अस्तित्वहीन कार्य की शिकायत करें',
+    aiScore: 'एआई जोखिम स्कोर',
+    riskCritical: 'अति-संवेदनशील जोखिम',
+    riskWarning: 'उच्च चेतावनी',
+    riskModerate: 'मध्यम जोखिम',
+    riskStandard: 'मानक / स्वीकृत'
+  }
+};
+
+// ==========================================================================
+// Interactive AI Risk Engine Sandbox Presets (SIH Jury Test Scenarios)
+// ==========================================================================
+export const AI_SANDBOX_PRESETS = [
+  {
+    id: 'case-1',
+    name: 'Suspended GSTIN & Disbursal Disparity',
+    nameHi: 'निलंबित जीएसटी एवं संवितरण विसंगति',
+    category: 'Vendor Collusion & Inactive Tax',
+    workId: 'MPLADS-2024-UP-0889',
+    title: 'Installation of 12 Solar High-Mast RO Drinking Water Plants in Sevapuri Block',
+    sector: 'Drinking Water & Sanitation',
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    sanctionedAmountLakhs: 96.8,
+    disbursedPercent: 85,
+    physicalProgressPercent: 12,
+    contractor: 'Apex Purvanchal Buildtech Ltd',
+    contractorGstin: '09AAACA4489M1Z8',
+    coordinates: [25.3176, 82.9739],
+    expectedScore: 94,
+    expectedTier: 'critical',
+    keyTriggers: [
+      'Financial disbursal at 85% with ground physical progress only 12% (+73% disparity variance)',
+      'Contractor GSTIN 09AAACA4489M1Z8 marked "SUSPENDED" on GSTN Gateway since Oct 2024',
+      'e-Sakshi field photos contain duplicated EXIF hash matching 2022 project'
+    ],
+    recommendedOrder: 'Immediate Outlay Freeze under GFR Rule 130 & Dispatch of Vigilance Flying Squad'
+  },
+  {
+    id: 'case-2',
+    name: 'Tender Splitting Below ₹10 Lakh Threshold',
+    nameHi: 'ई-निविदा परिहार हेतु कार्य विखंडन (GFR 149)',
+    category: 'Public Procurement Bypass (GFR 2017)',
+    workId: 'MPLADS-2024-MH-1102',
+    title: 'Solarization of 25 Zilla Parishad Rural Schools in Haveli Block',
+    sector: 'Education & Digital Classrooms',
+    district: 'Pune',
+    state: 'Maharashtra',
+    sanctionedAmountLakhs: 48.2,
+    disbursedPercent: 60,
+    physicalProgressPercent: 20,
+    contractor: 'Sahyadri Green Energies LLP',
+    contractorGstin: '27AABCS9192L1Z5',
+    coordinates: [18.5204, 73.8567],
+    expectedScore: 88,
+    expectedTier: 'critical',
+    keyTriggers: [
+      'Artificial fragmentation: 5 contiguous work orders of ₹9.8L issued within 72 hours',
+      'Circumvention of mandatory GeM national competitive bidding threshold (₹10.00 Lakhs)',
+      'Identical broadband IP address detected on all 3 submitted quotation bids'
+    ],
+    recommendedOrder: 'Tender Cancellation & Show-Cause Notice to Executive Engineer'
+  },
+  {
+    id: 'case-3',
+    name: 'Geospatial Asset Collision & Double Invoicing',
+    nameHi: 'भू-स्थानिक ओवरलैप एवं दोहरा भुगतान',
+    category: 'Ghost Asset / Inter-Scheme Duplicate',
+    workId: 'MPLADS-2024-BR-0731',
+    title: 'Reinforced Cement Concrete Link Road from NH-31 to Bakhtiyarpur Ghat',
+    sector: 'Rural Roads & Culverts',
+    district: 'Patna',
+    state: 'Bihar',
+    sanctionedAmountLakhs: 145.0,
+    disbursedPercent: 90,
+    physicalProgressPercent: 35,
+    contractor: 'Magadh Nirman Infrastructure',
+    contractorGstin: '10AABCM3312Q1Z9',
+    coordinates: [25.5941, 85.1376],
+    expectedScore: 91,
+    expectedTier: 'critical',
+    keyTriggers: [
+      'Survey of India GIS coordinates match PMGSY Road Asset #BR-PAT-092 (Asset collision: 98.6%)',
+      'Dual claiming: Identical gravel volume vouchers submitted to both state and central accounts',
+      'Ground progress 35% vs 90% fund release'
+    ],
+    recommendedOrder: 'FIR Registration under Prevention of Corruption Act & Asset De-listing'
+  },
+  {
+    id: 'case-4',
+    name: 'Negative List Violation (Prohibited Commercial Assets)',
+    nameHi: 'प्रतिबंधित सूची उल्लंघन (वाणिज्यिक दुकान निर्माण)',
+    category: 'Statutory Guidelines Violation (Clause 5.2)',
+    workId: 'MPLADS-2024-UP-0994',
+    title: 'Construction of Commercial Market Stalls near Cantt Railway Station',
+    sector: 'Community Assets & Halls',
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    sanctionedAmountLakhs: 115.0,
+    disbursedPercent: 40,
+    physicalProgressPercent: 15,
+    contractor: 'Kashi Real Estate & Projects',
+    contractorGstin: '09AABCK5544N1Z6',
+    coordinates: [25.3289, 82.9868],
+    expectedScore: 96,
+    expectedTier: 'critical',
+    keyTriggers: [
+      'Commercial revenue-generating stalls strictly barred under Clause 5.2 (Prohibited List of MPLADS Guidelines 2023)',
+      'Executive Engineer initiated tender without mandatory prior District Collector approval',
+      'Land title dispute with North Eastern Railway authorities'
+    ],
+    recommendedOrder: 'Administrative Sanction Revocation & Total Fund Recovery Order'
+  },
+  {
+    id: 'case-5',
+    name: 'Model Compliant Infrastructure with Telemetry',
+    nameHi: 'आदर्श अनुपालन अवसंरचना (स्मार्ट टेलीमेट्री)',
+    category: '100% Compliant Benchmark',
+    workId: 'MPLADS-2024-OR-0455',
+    title: 'Installation of 500 Solar LED Street Lighting Systems in Sambalpur Tribal Villages',
+    sector: 'Renewable & Solar Streetlights',
+    district: 'Sambalpur',
+    state: 'Odisha',
+    sanctionedAmountLakhs: 85.0,
+    disbursedPercent: 90,
+    physicalProgressPercent: 88,
+    contractor: 'Utkal Solar Grid Solutions',
+    contractorGstin: '21AABCU7711B1Z2',
+    coordinates: [21.4669, 83.9812],
+    expectedScore: 24,
+    expectedTier: 'standard',
+    keyTriggers: [
+      '100% telemetry uptime verified via GSM remote IoT monitoring chips',
+      'All 3 stage geotagged photographs certified by District Planning Committee',
+      'Vendor active on GSTN with nil tax arrears; 100% Utilization Certificate submitted'
+    ],
+    recommendedOrder: 'Final Tranche Release & Asset Handover Certificate Issuance'
+  }
+];
+
+// ==========================================================================
+// Citizen Whistleblower Grievance Records (Jan-Drishti / CPGRAMS Portal)
+// ==========================================================================
+export const CITIZEN_GRIEVANCES = [
+  {
+    docketId: 'CPGRAMS-MPLADS-2026-0889',
+    workId: 'MPLADS-2024-UP-0889',
+    citizenName: 'Rameshwar Nath Mishra',
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    category: 'Ghost Asset / Incomplete Civil Work',
+    description: 'The solar RO drinking water plant at Sevapuri was shown as 85% complete on the portal, but on site only four rusty iron pillars are standing with no water connection. Handpump was removed causing severe drinking water crisis.',
+    submittedDate: '15 Sep 2026, 14:22 IST',
+    status: 'Forwarded to District Magistrate',
+    priority: 'Urgent',
+    evidenceFile: 'sevapuri_site_photo_15sep2026.jpg',
+    location: 'Sevapuri Gram Panchayat, Near Primary School'
+  },
+  {
+    docketId: 'CPGRAMS-MPLADS-2026-0731',
+    workId: 'MPLADS-2024-BR-0731',
+    citizenName: 'Abhay Kumar Singh',
+    district: 'Patna',
+    state: 'Bihar',
+    category: 'Asset Duplication / Double Invoicing',
+    description: 'This concrete road from NH-31 to Bakhtiyarpur Ghat was already constructed under PMGSY last year. A new MPLADS plaque has been erected over the old PMGSY stone without pouring any new concrete.',
+    submittedDate: '12 Sep 2026, 09:45 IST',
+    status: 'Inquiry Ordered by Vigilance Officer',
+    priority: 'Critical',
+    evidenceFile: 'bakhtiyarpur_plaque_overlap.jpg',
+    location: 'Bakhtiyarpur Ghat Road, NH-31 Junction'
+  },
+  {
+    docketId: 'CPGRAMS-MPLADS-2026-0994',
+    workId: 'MPLADS-2024-UP-0994',
+    citizenName: 'Sunita Devi (Ward Member)',
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    category: 'Prohibited Commercial Monetization',
+    description: 'Private shop owners are being charged ₹15,000 monthly rent for stalls built using public MPLADS development funds. This violates the non-commercial community asset rule.',
+    submittedDate: '08 Sep 2026, 18:10 IST',
+    status: 'Outlay Frozen by DM Order',
+    priority: 'Critical',
+    evidenceFile: 'cantt_commercial_receipt.jpg',
+    location: 'Cantt Railway Station Approach Market'
+  },
+  {
+    docketId: 'CPGRAMS-MPLADS-2026-0412',
+    workId: 'MPLADS-2024-UP-0412',
+    citizenName: 'Dr. Alok Pandey',
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    category: 'Public Appreciation / Feedback',
+    description: 'Cholapur Sub-Centre Health Clinic has been completed on schedule with excellent diagnostic equipment. Doctors are attending patients daily. Commendable work.',
+    submittedDate: '04 Sep 2026, 11:30 IST',
+    status: 'Feedback Recorded in Public Portal',
+    priority: 'Normal',
+    evidenceFile: 'cholapur_clinic_operational.jpg',
+    location: 'Cholapur Main Road, Varanasi'
+  }
+];
+
+// ==========================================================================
+// Contractor Cartel (HHI) & SC/ST Statutory Compliance Data
+// ==========================================================================
+export const CARTEL_HHI_DATA = [
+  {
+    district: 'South 24 Parganas',
+    state: 'West Bengal',
+    hhiScore: 0.81,
+    cartelRisk: 'Critical Monopolization',
+    topContractor: 'Sundarbans Heavy Civil Works',
+    topContractorShare: '76.4%',
+    totalContractors: 3,
+    avgBidsPerTender: 1.2,
+    flaggedCollusion: true,
+    recommendation: 'Open nationwide e-procurement on GeM portal; refer to Competition Commission of India (CCI)'
+  },
+  {
+    district: 'Patna',
+    state: 'Bihar',
+    hhiScore: 0.74,
+    cartelRisk: 'High Concentration',
+    topContractor: 'Magadh Nirman Infrastructure',
+    topContractorShare: '68.2%',
+    totalContractors: 5,
+    avgBidsPerTender: 1.8,
+    flaggedCollusion: true,
+    recommendation: 'Enforce minimum 3 independent bidder verification rule before administrative sanction'
+  },
+  {
+    district: 'Jaipur',
+    state: 'Rajasthan',
+    hhiScore: 0.68,
+    cartelRisk: 'Moderate Concentration',
+    topContractor: 'Marwar Jal Projects Ltd',
+    topContractorShare: '59.5%',
+    totalContractors: 7,
+    avgBidsPerTender: 2.4,
+    flaggedCollusion: false,
+    recommendation: 'Rotate empanelment list for drinking water tube well packages'
+  },
+  {
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    hhiScore: 0.42,
+    cartelRisk: 'Balanced Competition',
+    topContractor: 'Kashi Urban Infrastructure Pvt Ltd',
+    topContractorShare: '34.8%',
+    totalContractors: 14,
+    avgBidsPerTender: 3.8,
+    flaggedCollusion: false,
+    recommendation: 'Maintain active multi-vendor participation in civil works'
+  },
+  {
+    district: 'Bengaluru Urban',
+    state: 'Karnataka',
+    hhiScore: 0.24,
+    cartelRisk: 'Healthy Open Market',
+    topContractor: 'Karnataka Educational Supplies Co',
+    topContractorShare: '18.2%',
+    totalContractors: 26,
+    avgBidsPerTender: 5.2,
+    flaggedCollusion: false,
+    recommendation: 'Model competitive benchmark for other urban parliamentary constituencies'
+  }
+];
+
+export const SC_ST_COMPLIANCE_DATA = [
+  {
+    district: 'Varanasi',
+    state: 'Uttar Pradesh',
+    scTarget: '15.0%',
+    scActual: '16.4%',
+    scStatus: 'Compliant',
+    stTarget: '7.5%',
+    stActual: '3.2%',
+    stStatus: 'Lagging Deficit (-4.3%)',
+    totalOutlayCr: 32.4
+  },
+  {
+    district: 'Sambalpur',
+    state: 'Odisha',
+    scTarget: '15.0%',
+    scActual: '18.2%',
+    scStatus: 'Compliant',
+    stTarget: '7.5%',
+    stActual: '28.6%',
+    stStatus: 'Compliant (Tribal Priority)',
+    totalOutlayCr: 21.0
+  },
+  {
+    district: 'Patna',
+    state: 'Bihar',
+    scTarget: '15.0%',
+    scActual: '12.8%',
+    scStatus: 'Deficit (-2.2%)',
+    stTarget: '7.5%',
+    stActual: '1.4%',
+    stStatus: 'Critical Deficit (-6.1%)',
+    totalOutlayCr: 45.2
+  },
+  {
+    district: 'Pune',
+    state: 'Maharashtra',
+    scTarget: '15.0%',
+    scActual: '15.8%',
+    scStatus: 'Compliant',
+    stTarget: '7.5%',
+    stActual: '8.4%',
+    stStatus: 'Compliant',
+    totalOutlayCr: 28.6
+  }
+];
+

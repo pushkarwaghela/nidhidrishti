@@ -3,27 +3,43 @@ import {
   LayoutDashboard,
   MapPin,
   ShieldAlert,
+  Zap,
   FileCheck2,
   BarChart3,
   BookOpen,
+  MessageSquarePlus,
   CheckCircle2,
   Server
 } from 'lucide-react';
+import { I18N_STRINGS } from '../data/mockData';
 
-export default function Sidebar({ activeTab, onTabChange, criticalCount = 142 }) {
+export default function Sidebar({
+  activeTab,
+  onTabChange,
+  criticalCount = 142,
+  lang = 'en',
+  currentRole,
+  onOpenCitizenModal
+}) {
+  const t = I18N_STRINGS[lang] || I18N_STRINGS.en;
+
   const navItems = [
-    { id: 'dashboard', label: 'Risk Overview Dashboard', icon: LayoutDashboard },
-    { id: 'heatmap', label: 'Geospatial Risk Heatmap', icon: MapPin },
-    { id: 'audit-queue', label: 'AI Anomaly & Risk Queue', icon: ShieldAlert, badge: criticalCount },
-    { id: 'data-quality', label: 'Ingestion Data Quality Trail', icon: FileCheck2 },
-    { id: 'analytics', label: 'Constituency & Analytics', icon: BarChart3 },
-    { id: 'guidelines', label: 'MPLADS Guidelines & SOPs', icon: BookOpen }
+    { id: 'dashboard', label: t.navDashboard, icon: LayoutDashboard },
+    { id: 'heatmap', label: t.navHeatmap, icon: MapPin },
+    { id: 'audit-queue', label: t.navQueue, icon: ShieldAlert, badge: criticalCount },
+    { id: 'sandbox', label: t.navSandbox, icon: Zap, highlight: true },
+    { id: 'data-quality', label: t.navQuality, icon: FileCheck2 },
+    { id: 'analytics', label: t.navAnalytics, icon: BarChart3 },
+    { id: 'guidelines', label: t.navGuidelines, icon: BookOpen }
   ];
 
   return (
     <aside className="gov-sidebar" aria-label="Official Navigation Sidebar">
       <nav className="sidebar-nav">
-        <div className="nav-section-title">Core Vigilance Modules</div>
+        <div className="nav-section-title">
+          {lang === 'hi' ? 'मुख्य सतर्कता प्रभाग' : 'Core Vigilance Modules'}
+        </div>
+
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -31,7 +47,7 @@ export default function Sidebar({ activeTab, onTabChange, criticalCount = 142 })
             <button
               key={item.id}
               type="button"
-              className={`nav-link-btn ${isActive ? 'active' : ''}`}
+              className={`nav-link-btn ${isActive ? 'active' : ''} ${item.highlight ? 'nav-highlight-btn' : ''}`}
               onClick={() => onTabChange(item.id)}
             >
               <Icon size={18} />
@@ -44,8 +60,22 @@ export default function Sidebar({ activeTab, onTabChange, criticalCount = 142 })
             </button>
           );
         })}
+
+        {/* Public Citizen Grievance Action Button */}
+        <div style={{ marginTop: 14, padding: '0 8px' }}>
+          <button
+            type="button"
+            className="citizen-grievance-sidebar-btn"
+            onClick={onOpenCitizenModal}
+            title="Submit Public Whistleblower Complaint"
+          >
+            <MessageSquarePlus size={16} />
+            <span>{lang === 'hi' ? 'जन-शिकायत दर्ज करें' : 'Report Ghost Asset'}</span>
+          </button>
+        </div>
       </nav>
 
+      {/* Official System Health Footer */}
       <div className="sidebar-footer">
         <div className="sidebar-status-box">
           <div className="status-row">
@@ -62,7 +92,7 @@ export default function Sidebar({ activeTab, onTabChange, criticalCount = 142 })
           </div>
         </div>
         <div className="sidebar-version-text">
-          NIC MoSPI Portal v4.1.8 | Certified Secure
+          NIC MoSPI Portal v4.2.0 | STQC Certified
         </div>
       </div>
     </aside>

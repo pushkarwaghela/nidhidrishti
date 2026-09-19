@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MPLADS_WORKS } from '../data/mockData';
+import { MPLADS_WORKS, I18N_STRINGS } from '../data/mockData';
 import {
   Search,
   Filter,
@@ -10,16 +10,23 @@ import {
   ChevronRight,
   Eye,
   CheckCircle2,
-  AlertTriangle
+  AlertTriangle,
+  FileText
 } from 'lucide-react';
 
-export default function AnomalyAuditQueue({ onSelectWorkForModal }) {
+export default function AnomalyAuditQueue({
+  onSelectWorkForModal,
+  onOpenOrderModal,
+  lang = 'en'
+}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [sectorFilter, setSectorFilter] = useState('ALL');
   const [riskFilter, setRiskFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
+
+  const t = I18N_STRINGS[lang] || I18N_STRINGS.en;
 
   // Extract sectors
   const sectorsList = ['ALL', ...new Set(MPLADS_WORKS.map(w => w.sector))];
@@ -88,7 +95,7 @@ export default function AnomalyAuditQueue({ onSelectWorkForModal }) {
       {/* Header Banner */}
       <div className="page-header-banner">
         <div className="page-title-group">
-          <h1>AI Anomaly & Risk Audit Queue</h1>
+          <h1>{t.navQueue}</h1>
           <p className="page-description">
             Vigilance verification roster prioritizing high-risk anomalies, contractor cartels, and fund-progress disparities.
           </p>
@@ -155,10 +162,10 @@ export default function AnomalyAuditQueue({ onSelectWorkForModal }) {
               }}
             >
               <option value="ALL">All Risk Levels</option>
-              <option value="critical">Critical (Score 80-100)</option>
-              <option value="warning">High Warning (Score 60-79)</option>
-              <option value="moderate">Moderate (Score 40-59)</option>
-              <option value="standard">Standard (Score 0-39)</option>
+              <option value="critical">Critical (80-100)</option>
+              <option value="warning">High Warning (60-79)</option>
+              <option value="moderate">Moderate (40-59)</option>
+              <option value="standard">Standard (0-39)</option>
             </select>
 
             {(searchQuery !== '' || sectorFilter !== 'ALL' || riskFilter !== 'ALL' || statusFilter !== 'ALL') && (
@@ -241,15 +248,30 @@ export default function AnomalyAuditQueue({ onSelectWorkForModal }) {
                     </div>
                   </td>
                   <td>
-                    <button
-                      type="button"
-                      className="gov-btn gov-btn-primary"
-                      style={{ fontSize: '12px', padding: '5px 10px' }}
-                      onClick={() => onSelectWorkForModal(work)}
-                    >
-                      <Eye size={14} />
-                      Audit Details
-                    </button>
+                    <div style={{ display: 'flex', gap: '4px' }}>
+                      <button
+                        type="button"
+                        className="gov-btn gov-btn-primary"
+                        style={{ fontSize: '11px', padding: '4px 8px' }}
+                        onClick={() => onSelectWorkForModal(work)}
+                        title="Open Forensic Dossier"
+                      >
+                        <Eye size={13} />
+                        Audit
+                      </button>
+                      {onOpenOrderModal && work.riskScore >= 60 && (
+                        <button
+                          type="button"
+                          className="gov-btn"
+                          style={{ fontSize: '11px', padding: '4px 8px', color: '#0B3D67' }}
+                          onClick={() => onOpenOrderModal(work, 'Order Physical Inspection', 'Vigilance queue audit action')}
+                          title="Generate Official G.O."
+                        >
+                          <FileText size={13} />
+                          G.O.
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))

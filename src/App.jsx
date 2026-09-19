@@ -1,30 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import Footer from './components/Footer';
 import AuditDetailsModal from './components/AuditDetailsModal';
+import OfficialOrderModal from './components/OfficialOrderModal';
+import CitizenGrievanceModal from './components/CitizenGrievanceModal';
 import RiskOverview from './pages/RiskOverview';
 import GeospatialHeatmap from './pages/GeospatialHeatmap';
 import AnomalyAuditQueue from './pages/AnomalyAuditQueue';
+import AiEngineSandbox from './pages/AiEngineSandbox';
 import DataQualityAuditTrail from './pages/DataQualityAuditTrail';
 import ConstituencyAnalytics from './pages/ConstituencyAnalytics';
 import GuidelinesSOP from './pages/GuidelinesSOP';
 import { ROLES, MPLADS_WORKS } from './data/mockData';
-import { CheckCircle2, AlertTriangle, Info } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Info, FileText } from 'lucide-react';
 
 export default function App() {
   const [currentRole, setCurrentRole] = useState(ROLES[0]);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [selectedWorkForModal, setSelectedWorkForModal] = useState(null);
+  const [orderModalData, setOrderModalData] = useState(null);
+  const [isCitizenModalOpen, setIsCitizenModalOpen] = useState(false);
   const [fontSize, setFontSize] = useState('normal');
+  const [lang, setLang] = useState('en');
+  const [isHighContrast, setIsHighContrast] = useState(false);
   const [toasts, setToasts] = useState([]);
   const [worksData, setWorksData] = useState(MPLADS_WORKS);
 
-  // Manage accessibility font size class on body
+  // Manage accessibility font size & contrast class on body
   useEffect(() => {
-    document.body.classList.remove('font-small', 'font-large');
+    document.body.classList.remove('font-small', 'font-large', 'high-contrast');
     if (fontSize === 'small') document.body.classList.add('font-small');
     if (fontSize === 'large') document.body.classList.add('font-large');
-  }, [fontSize]);
+    if (isHighContrast) document.body.classList.add('high-contrast');
+  }, [fontSize, isHighContrast]);
 
   // Toast notification trigger
   const addToast = (message, type = 'success') => {
@@ -32,7 +41,7 @@ export default function App() {
     setToasts(prev => [...prev, { id, message, type }]);
     setTimeout(() => {
       setToasts(prev => prev.filter(t => t.id !== id));
-    }, 4500);
+    }, 5000);
   };
 
   // Trigger executive actions from modal
@@ -57,28 +66,53 @@ export default function App() {
     );
   };
 
+  // Open the Official Government Order generator
+  const handleOpenOrderModal = (work, actionType = 'Freeze Outlay', note = '') => {
+    setOrderModalData({
+      work,
+      actionType,
+      note,
+      official: currentRole
+    });
+  };
+
+  // When citizen submits whistleblower grievance
+  const handleGrievanceSubmitted = (grievance) => {
+    addToast(`WHISTLEBLOWER COMPLAINT #${grievance.docketId}: Logged in Central Vigilance Queue for Work #${grievance.workId}.`, 'success');
+  };
+
   const criticalCount = worksData.filter(w => w.riskLevel === 'critical').length;
 
   return (
-    <div className="app-container">
-      {/* Official Government Header */}
+    <div className={`app-container ${isHighContrast ? 'high-contrast-mode' : ''}`} id="main-content">
+      {/* Official Government Header with GIGW Top Bar */}
       <Header
         currentRole={currentRole}
         onRoleChange={(newRole) => {
           setCurrentRole(newRole);
-          addToast(`Switched active official persona to: ${newRole.title}`, 'info');
+          addToast(`Switched active official persona to: ${lang === 'hi' && newRole.titleHi ? newRole.titleHi : newRole.title}`, 'info');
         }}
         onFontSizeChange={setFontSize}
         currentFontSize={fontSize}
+        lang={lang}
+        onLangChange={(newLang) => {
+          setLang(newLang);
+          addToast(newLang === 'hi' ? 'भाषा हिन्दी में बदली गई।' : 'Interface switched to English.', 'info');
+        }}
+        isHighContrast={isHighContrast}
+        onToggleContrast={() => setIsHighContrast(!isHighContrast)}
       />
 
-      {/* Main Body */}
+      {/* Main Body Layout */}
       <div className="app-body">
         {/* Persistent Left Sidebar */}
         <Sidebar
           activeTab={activeTab}
           onTabChange={setActiveTab}
           criticalCount={criticalCount}
+          lang={lang}
+          currentRole={currentRole}
+          onOpenCitizenModal={() => setIsCitizenModalOpen(true)}
         />
 
         {/* Dynamic Main Content Workspace */}
@@ -88,34 +122,52 @@ export default function App() {
               currentRole={currentRole}
               onNavigateToTab={setActiveTab}
               onSelectWorkForModal={setSelectedWorkForModal}
+              onOpenCitizenModal={() => setIsCitizenModalOpen(true)}
+              onOpenOrderModal={handleOpenOrderModal}
+              lang={lang}
             />
           )}
 
           {activeTab === 'heatmap' && (
             <GeospatialHeatmap
               onSelectWorkForModal={setSelectedWorkForModal}
+              lang={lang}
             />
           )}
 
           {activeTab === 'audit-queue' && (
             <AnomalyAuditQueue
               onSelectWorkForModal={setSelectedWorkForModal}
+              onOpenOrderModal={handleOpenOrderModal}
+              lang={lang}
+            />
+          )}
+
+          {activeTab === 'sandbox' && (
+            <AiEngineSandbox
+              onSelectWorkForOrder={handleOpenOrderModal}
+              lang={lang}
             />
           )}
 
           {activeTab === 'data-quality' && (
-            <DataQualityAuditTrail />
+            <DataQualityAuditTrail
+              lang={lang}
+            />
           )}
 
           {activeTab === 'analytics' && (
             <ConstituencyAnalytics
               currentRole={currentRole}
               onSelectWorkForModal={setSelectedWorkForModal}
+              lang={lang}
             />
           )}
 
           {activeTab === 'guidelines' && (
-            <GuidelinesSOP />
+            <GuidelinesSOP
+              lang={lang}
+            />
           )}
         </main>
       </div>
@@ -126,8 +178,32 @@ export default function App() {
           work={selectedWorkForModal}
           onClose={() => setSelectedWorkForModal(null)}
           onTriggerAction={handleTriggerAction}
+          onOpenOrderModal={handleOpenOrderModal}
+          lang={lang}
         />
       )}
+
+      {/* Official Government Order (G.O.) Document Modal */}
+      {orderModalData && (
+        <OfficialOrderModal
+          work={orderModalData.work}
+          actionType={orderModalData.actionType}
+          note={orderModalData.note}
+          official={orderModalData.official}
+          onClose={() => setOrderModalData(null)}
+        />
+      )}
+
+      {/* Citizen Whistleblower Grievance Modal */}
+      {isCitizenModalOpen && (
+        <CitizenGrievanceModal
+          onClose={() => setIsCitizenModalOpen(false)}
+          onSubmitSuccess={handleGrievanceSubmitted}
+        />
+      )}
+
+      {/* Official NIC & MeitY Compliance Footer */}
+      <Footer lang={lang} />
 
       {/* Official Notification Toasts */}
       <div className="toast-container" aria-live="polite">

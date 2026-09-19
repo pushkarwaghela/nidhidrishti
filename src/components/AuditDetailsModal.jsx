@@ -12,15 +12,25 @@ import {
   Lock,
   Eye,
   CheckCircle2,
-  Clock
+  Clock,
+  Printer
 } from 'lucide-react';
+import { I18N_STRINGS } from '../data/mockData';
 
-export default function AuditDetailsModal({ work, onClose, onTriggerAction }) {
+export default function AuditDetailsModal({
+  work,
+  onClose,
+  onTriggerAction,
+  onOpenOrderModal,
+  lang = 'en'
+}) {
   if (!work) return null;
 
   const [actionNote, setActionNote] = useState('');
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [pendingActionType, setPendingActionType] = useState(null);
+
+  const t = I18N_STRINGS[lang] || I18N_STRINGS.en;
 
   const handleActionClick = (type) => {
     setPendingActionType(type);
@@ -42,7 +52,7 @@ export default function AuditDetailsModal({ work, onClose, onTriggerAction }) {
         {/* Modal Header */}
         <div className="modal-header">
           <div className="modal-title-group">
-            <h2>Vigilance Forensic Dossier — Work #{work.id}</h2>
+            <h2>{lang === 'hi' ? 'सतर्कता फोरेंसिक डॉसियर' : 'Vigilance Forensic Dossier'} — Work #{work.id}</h2>
             <div className="modal-sub">
               {work.district}, {work.state} | {work.sector}
             </div>
@@ -61,7 +71,9 @@ export default function AuditDetailsModal({ work, onClose, onTriggerAction }) {
         <div className="modal-body">
           {/* Work Summary Strip */}
           <div className="modal-section-box">
-            <div className="modal-section-title">Administrative & Sanction Metadata</div>
+            <div className="modal-section-title">
+              {lang === 'hi' ? 'प्रशासनिक एवं संस्तुति विवरण' : 'Administrative & Sanction Metadata'}
+            </div>
             <div className="dossier-grid">
               <div className="dossier-item">
                 <span className="key">Work Title</span>
@@ -76,19 +88,21 @@ export default function AuditDetailsModal({ work, onClose, onTriggerAction }) {
                 <span className="val">{work.sanctionDate}</span>
               </div>
               <div className="dossier-item">
-                <span className="key">Sanctioned Amount</span>
-                <span className="val">₹{work.sanctionedAmountLakhs.toFixed(2)} Lakhs</span>
+                <span className="key">Sanctioned Outlay</span>
+                <span className="val" style={{ fontWeight: 700, color: '#0B3D67' }}>
+                  ₹{work.sanctionedAmountLakhs.toFixed(2)} Lakhs
+                </span>
               </div>
               <div className="dossier-item">
                 <span className="key">Implementing Agency</span>
                 <span className="val">{work.implementingAgency}</span>
               </div>
               <div className="dossier-item">
-                <span className="key">Nodal Officer</span>
+                <span className="key">Assigned Nodal Officer</span>
                 <span className="val">{work.nodalOfficer}</span>
               </div>
               <div className="dossier-item">
-                <span className="key">Contractor Name</span>
+                <span className="key">Contractor Firm</span>
                 <span className="val">{work.contractor}</span>
               </div>
               <div className="dossier-item">
@@ -97,7 +111,7 @@ export default function AuditDetailsModal({ work, onClose, onTriggerAction }) {
               </div>
               <div className="dossier-item">
                 <span className="key">Current Status</span>
-                <span className="val" style={{ color: '#C62828' }}>{work.status}</span>
+                <span className="val" style={{ color: '#C62828', fontWeight: 700 }}>{work.status}</span>
               </div>
             </div>
           </div>
@@ -105,8 +119,8 @@ export default function AuditDetailsModal({ work, onClose, onTriggerAction }) {
           {/* Disparity Meter (Physical vs Financial) */}
           <div className="disparity-meter-box">
             <div className="disparity-labels">
-              <span>Financial Outlay Disbursed vs Physical Progress Verified on Ground</span>
-              <span style={{ color: work.disparityIndex > 30 ? '#C62828' : '#1B5E20' }}>
+              <span>Financial Outlay Disbursed vs Physical Progress Certified on Ground</span>
+              <span style={{ color: work.disparityIndex > 30 ? '#C62828' : '#1B5E20', fontWeight: 700 }}>
                 Disparity Variance: +{work.disparityIndex}%
               </span>
             </div>
@@ -147,14 +161,25 @@ export default function AuditDetailsModal({ work, onClose, onTriggerAction }) {
               <div className="forensic-finding-card">
                 <AlertTriangle size={18} color="#D32F2F" style={{ flexShrink: 0, marginTop: 2 }} />
                 <div>
-                  <div className="forensic-finding-title">Primary Vigilance Reason</div>
+                  <div className="forensic-finding-title">Primary Algorithmic Vigilance Trigger</div>
                   <div className="forensic-finding-desc">{work.triggerReason}</div>
                 </div>
               </div>
 
               {work.forensics && work.forensics.map((f, idx) => (
-                <div key={idx} className="forensic-finding-card" style={{ borderColor: f.severity === 'Critical' ? '#FFCDD2' : '#FFE0B2', borderLeftColor: f.severity === 'Critical' ? '#D32F2F' : '#F57C00' }}>
-                  <ShieldAlert size={16} color={f.severity === 'Critical' ? '#D32F2F' : '#F57C00'} style={{ flexShrink: 0, marginTop: 2 }} />
+                <div
+                  key={idx}
+                  className="forensic-finding-card"
+                  style={{
+                    borderColor: f.severity === 'Critical' ? '#FFCDD2' : '#FFE0B2',
+                    borderLeftColor: f.severity === 'Critical' ? '#D32F2F' : '#F57C00'
+                  }}
+                >
+                  <ShieldAlert
+                    size={16}
+                    color={f.severity === 'Critical' ? '#D32F2F' : '#F57C00'}
+                    style={{ flexShrink: 0, marginTop: 2 }}
+                  />
                   <div>
                     <div className="forensic-finding-title" style={{ color: f.severity === 'Critical' ? '#C62828' : '#E65100' }}>
                       [{f.severity.toUpperCase()}] {f.rule}
@@ -168,17 +193,17 @@ export default function AuditDetailsModal({ work, onClose, onTriggerAction }) {
 
           {/* Action note prompt if user clicked an action */}
           {showNoteInput && (
-            <div style={{ backgroundColor: '#FFF8E1', border: '1px solid #FFE082', padding: '12px', borderRadius: '4px' }}>
-              <div style={{ fontSize: '12px', fontWeight: '700', color: '#F57F17', marginBottom: '6px' }}>
-                Enter Official Executive Order Note for: {pendingActionType}
+            <div style={{ backgroundColor: '#FFF8E1', border: '1px solid #FFE082', padding: '14px', borderRadius: '4px', marginTop: '12px' }}>
+              <div style={{ fontSize: '12.5px', fontWeight: '700', color: '#F57F17', marginBottom: '6px' }}>
+                Enter Official Executive Order Note for: <strong>{pendingActionType}</strong>
               </div>
               <textarea
                 value={actionNote}
                 onChange={(e) => setActionNote(e.target.value)}
-                placeholder="Specify file reference number, grounds for order, and assigned inspection officer..."
+                placeholder="Specify file reference number, statutory grounds (GFR Rule 130 / MPLADS 7.1), and assigned inspection officer..."
                 style={{ width: '100%', height: '60px', padding: '8px', fontSize: '12px', border: '1px solid #D1D9E2', borderRadius: '4px' }}
               />
-              <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+              <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
                 <button
                   type="button"
                   className="gov-btn gov-btn-primary"
@@ -199,41 +224,58 @@ export default function AuditDetailsModal({ work, onClose, onTriggerAction }) {
         </div>
 
         {/* Modal Footer with Government Action Buttons */}
-        <div className="modal-footer">
-          <button
-            type="button"
-            className="gov-btn"
-            onClick={onClose}
-          >
-            Close Dossier
-          </button>
-          <button
-            type="button"
-            className="gov-btn"
-            style={{ color: '#1B5E20', borderColor: '#A5D6A7' }}
-            onClick={() => handleActionClick('Clear Flag')}
-          >
-            <CheckCircle2 size={15} />
-            Dismiss / Mark Cleared
-          </button>
-          <button
-            type="button"
-            className="gov-btn"
-            style={{ color: '#0B3D67' }}
-            onClick={() => handleActionClick('Order Physical Inspection')}
-          >
-            <Eye size={15} />
-            Order Physical Site Inspection
-          </button>
-          <button
-            type="button"
-            className="gov-btn gov-btn-primary"
-            style={{ backgroundColor: '#D32F2F', borderColor: '#D32F2F' }}
-            onClick={() => handleActionClick('Freeze Outlay')}
-          >
-            <Lock size={15} />
-            Freeze Outlay Disbursement
-          </button>
+        <div className="modal-footer" style={{ justifyContent: 'space-between' }}>
+          <div>
+            {onOpenOrderModal && (
+              <button
+                type="button"
+                className="gov-btn"
+                style={{ borderColor: '#0B3D67', color: '#0B3D67', fontWeight: 600 }}
+                onClick={() => onOpenOrderModal(work, 'Order Physical Inspection', actionNote)}
+                title="Generate printable official Government of India Letterhead order"
+              >
+                <FileText size={15} />
+                {t.generateOrder}
+              </button>
+            )}
+          </div>
+
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button
+              type="button"
+              className="gov-btn"
+              onClick={onClose}
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              className="gov-btn"
+              style={{ color: '#1B5E20', borderColor: '#A5D6A7' }}
+              onClick={() => handleActionClick('Clear Flag')}
+            >
+              <CheckCircle2 size={15} />
+              {t.dismissFlag}
+            </button>
+            <button
+              type="button"
+              className="gov-btn"
+              style={{ color: '#0B3D67' }}
+              onClick={() => handleActionClick('Order Physical Inspection')}
+            >
+              <Eye size={15} />
+              {t.orderInspection}
+            </button>
+            <button
+              type="button"
+              className="gov-btn gov-btn-primary"
+              style={{ backgroundColor: '#D32F2F', borderColor: '#D32F2F' }}
+              onClick={() => handleActionClick('Freeze Outlay')}
+            >
+              <Lock size={15} />
+              {t.freezeOutlay}
+            </button>
+          </div>
         </div>
       </div>
     </div>

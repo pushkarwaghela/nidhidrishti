@@ -3,7 +3,8 @@ import {
   SUMMARY_METRICS,
   RISK_SEVERITY_BREAKDOWN,
   SECTOR_ALLOCATION,
-  MPLADS_WORKS
+  MPLADS_WORKS,
+  I18N_STRINGS
 } from '../data/mockData';
 import MetricCard from '../components/MetricCard';
 import {
@@ -14,23 +15,31 @@ import {
   TrendingUp,
   ExternalLink,
   ChevronRight,
-  Info
+  Info,
+  Zap,
+  MessageSquarePlus,
+  Eye
 } from 'lucide-react';
 
 export default function RiskOverview({
   currentRole,
   onNavigateToTab,
-  onSelectWorkForModal
+  onSelectWorkForModal,
+  onOpenCitizenModal,
+  lang = 'en'
 }) {
+  const t = I18N_STRINGS[lang] || I18N_STRINGS.en;
   // Most urgent flagged work for alert strip
   const urgentWork = MPLADS_WORKS.find(w => w.riskScore >= 94) || MPLADS_WORKS[0];
+
+  const isCitizen = currentRole?.id === 'citizen';
 
   return (
     <div className="risk-overview-page">
       {/* Top Role-Sensitive Context Banner */}
       <div className="page-header-banner">
         <div className="page-title-group">
-          <h1>MPLADS AI Surveillance & Risk Overview</h1>
+          <h1>{t.navDashboard}</h1>
           <p className="page-description">
             Continuous real-time audit of parliamentary development expenditures, anomaly detection, and fund integrity metrics.
           </p>
@@ -38,11 +47,36 @@ export default function RiskOverview({
 
         <div className="role-banner-tag" title="Demonstrating active role-based data view">
           <div>
-            <div className="role-title">{currentRole.title}</div>
-            <div className="role-scope">{currentRole.scope} — {currentRole.officer}</div>
+            <div className="role-title">
+              {lang === 'hi' && currentRole.titleHi ? currentRole.titleHi : currentRole.title}
+            </div>
+            <div className="role-scope">
+              {lang === 'hi' && currentRole.scopeHi ? currentRole.scopeHi : currentRole.scope} — {currentRole.officer}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Special Citizen Jan-Bhagidari Action Bar if Citizen Persona is active */}
+      {isCitizen && (
+        <div className="citizen-banner-strip">
+          <div className="citizen-banner-content">
+            <div className="citizen-banner-badge">JAN-BHAGIDARI CITIZEN CONSOLE</div>
+            <h2>Public Transparency & Whistleblower Portal (जन-भागीदारी)</h2>
+            <p>
+              As a vigilant citizen, you can inspect real-time expenditure of your constituency’s MPLADS funds, cross-examine contractor billing against physical ground truth, and directly report stalled or ghost assets to the District Collector.
+            </p>
+          </div>
+          <button
+            type="button"
+            className="gov-btn gov-btn-primary citizen-action-btn"
+            onClick={onOpenCitizenModal}
+          >
+            <MessageSquarePlus size={18} />
+            {t.reportGhostAsset}
+          </button>
+        </div>
+      )}
 
       {/* Urgent Vigilance Alert Strip */}
       {urgentWork && (
@@ -61,20 +95,22 @@ export default function RiskOverview({
             </div>
           </div>
 
-          <button
-            type="button"
-            className="alert-btn-action"
-            onClick={() => onSelectWorkForModal(urgentWork)}
-          >
-            Inspect Forensic Dossier
-          </button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button
+              type="button"
+              className="alert-btn-action"
+              onClick={() => onSelectWorkForModal(urgentWork)}
+            >
+              {t.inspectDossier}
+            </button>
+          </div>
         </div>
       )}
 
       {/* 4 Primary KPI Summary Cards */}
       <section className="kpi-cards-grid" aria-label="Executive Outlay Summary">
         <MetricCard
-          title="Total Sanctioned Outlay"
+          title={t.kpiSanctioned}
           value={SUMMARY_METRICS.totalSanctionedOutlay.value}
           caption={SUMMARY_METRICS.totalSanctionedOutlay.caption}
           icon={IndianRupee}
@@ -82,7 +118,7 @@ export default function RiskOverview({
         />
 
         <MetricCard
-          title="Flagged Risk Outlay"
+          title={t.kpiFlagged}
           value={SUMMARY_METRICS.flaggedRiskOutlay.value}
           caption={SUMMARY_METRICS.flaggedRiskOutlay.caption}
           icon={AlertOctagon}
@@ -90,7 +126,7 @@ export default function RiskOverview({
         />
 
         <MetricCard
-          title="Critical Anomalies"
+          title={t.kpiCritical}
           value={SUMMARY_METRICS.criticalAnomalies.value}
           caption={SUMMARY_METRICS.criticalAnomalies.caption}
           icon={ShieldAlert}
@@ -98,7 +134,7 @@ export default function RiskOverview({
         />
 
         <MetricCard
-          title="Data Quality Resolved"
+          title={t.kpiClean}
           value={SUMMARY_METRICS.dataQualityResolved.value}
           caption={SUMMARY_METRICS.dataQualityResolved.caption}
           icon={FileCheck2}
@@ -118,14 +154,25 @@ export default function RiskOverview({
               </div>
               <div className="gov-panel-subtitle">Distribution of works across AI risk classification tiers</div>
             </div>
-            <button
-              type="button"
-              className="gov-btn"
-              onClick={() => onNavigateToTab('audit-queue')}
-              title="Open full table"
-            >
-              View Queue <ChevronRight size={14} />
-            </button>
+            <div style={{ display: 'flex', gap: '6px' }}>
+              <button
+                type="button"
+                className="gov-btn"
+                onClick={() => onNavigateToTab('sandbox')}
+                title="Test engine with sandbox"
+                style={{ color: '#0B3D67', fontWeight: 600 }}
+              >
+                <Zap size={14} color="#FF9933" /> AI Sandbox
+              </button>
+              <button
+                type="button"
+                className="gov-btn"
+                onClick={() => onNavigateToTab('audit-queue')}
+                title="Open full table"
+              >
+                View Queue <ChevronRight size={14} />
+              </button>
+            </div>
           </div>
 
           <div className="gov-panel-body">
@@ -134,7 +181,6 @@ export default function RiskOverview({
               <div className="donut-canvas-box">
                 <svg viewBox="0 0 100 100" width="100%" height="100%">
                   {/* Total works: 38 + 104 + 312 + 2450 = 2904 */}
-                  {/* Standard (2450 / 2904 = 84.3%) -> 265 deg */}
                   <circle
                     cx="50"
                     cy="50"
@@ -145,7 +191,6 @@ export default function RiskOverview({
                     strokeDasharray="200.7 238.7"
                     strokeDashoffset="0"
                   />
-                  {/* Moderate (312 / 2904 = 10.7%) */}
                   <circle
                     cx="50"
                     cy="50"
@@ -156,7 +201,6 @@ export default function RiskOverview({
                     strokeDasharray="25.5 238.7"
                     strokeDashoffset="-200.7"
                   />
-                  {/* Warning (104 / 2904 = 3.6%) */}
                   <circle
                     cx="50"
                     cy="50"
@@ -167,7 +211,6 @@ export default function RiskOverview({
                     strokeDasharray="8.6 238.7"
                     strokeDashoffset="-226.2"
                   />
-                  {/* Critical (38 / 2904 = 1.3%) */}
                   <circle
                     cx="50"
                     cy="50"
@@ -178,7 +221,6 @@ export default function RiskOverview({
                     strokeDasharray="3.9 238.7"
                     strokeDashoffset="-234.8"
                   />
-                  {/* Center Text */}
                   <text x="50" y="47" textAnchor="middle" fontSize="9" fontWeight="700" fill="#0B3D67">
                     2,904
                   </text>
